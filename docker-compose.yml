@@ -1,0 +1,8 @@
+version: '2.4'
+services:
+    node:
+        image: node:8.15.0
+        command: bash -c 'yarn install && yarn run test'
+        working_dir: /app
+        volumes:
+            - .:/app
