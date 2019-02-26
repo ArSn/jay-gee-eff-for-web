@@ -1,26 +1,30 @@
-# jay-gee-eff
-JGF - JSON Graph Format npm module
+[![Maintainability](https://api.codeclimate.com/v1/badges/1994476894037cadfcea/maintainability)](https://codeclimate.com/github/ArSn/jay-gee-eff-for-web/maintainability)
+[![Test Coverage](https://api.codeclimate.com/v1/badges/1994476894037cadfcea/test_coverage)](https://codeclimate.com/github/ArSn/jay-gee-eff-for-web/test_coverage)
 
-A library that provides the following features:
-1. Create JGF in-memory graphs
-    1. Add nodes
-    2. Add edges
-    3. List nodes
-    4. List edges
-    5. Remove nodes
-    6. Remove edges
-    7. Lookup nodes by id
-    8. Lookup edges by source and target nodes, with optional edge relation
-    9. Update node properties and meta data
-    10. TODO: Update edge properties and meta data
-2. Save in-memory graphs into a 100% compatible JGF JSON file
-3. Load a JGF JSON file into memory
-4. Validate JGF JSON files, for syntax (JGF schema) and semantics (invalid nodes and edges)
-5. Ability to load and merge partial JGF graph files (a single graph spread over multiple 'partial' graph files)
+# jay-gee-eff-for-web
+JGF - JSON Graph Format npm module - for web!
+
+A library that provides a featureset for creating JGF in-memory graphs:
+1. Add nodes
+2. Add edges
+3. List nodes
+4. List edges
+5. Remove nodes
+6. Remove edges
+7. Lookup nodes by id
+8. Lookup edges by source and target nodes, with optional edge relation
+9. Update node properties and meta data
+10. TODO: Update edge properties and meta data
+    
 
 # Installation
+with npm
 ```
-npm install jay-gee-eff --save
+npm install jay-gee-eff-for-web
+```
+or with yarn
+```
+yarn add jay-gee-eff-for-web
 ```
 
 # Usage
