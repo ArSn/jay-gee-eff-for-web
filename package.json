@@ -1,5 +1,5 @@
 {
-  "name": "jay-gee-eff",
+  "name": "jay-gee-eff-for-web",
   "version": "1.1.2",
   "description": "JGF - JSON Graph Format helper module",
   "main": "index.js",
@@ -8,7 +8,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/bigman73/jay-gee-eff.git"
+    "url": "git@github.com:ArSn/jay-gee-eff-for-web.git"
   },
   "keywords": [
     "JGF",
@@ -21,12 +21,12 @@
     "javascript",
     "es7"
   ],
-  "author": "Bigman73 (https://github.com/bigman73/jay-gee-eff)",
+  "author": "ArSn (https://github.com/ArSn/jay-gee-eff-for-web) - Credits for original package go to Bigman73 (https://github.com/bigman73/jay-gee-eff)",
   "license": "MIT",
   "bugs": {
-    "url": "https://github.com/bigman73/jay-gee-eff/issues"
+    "url": "https://github.com/ArSn/jay-gee-eff-for-web/issues"
   },
-  "homepage": "https://github.com/bigman73/jay-gee-eff#readme",
+  "homepage": "https://github.com/ArSn/jay-gee-eff-for-web#readme",
   "devDependencies": {
     "chai": "^4.2.0",
     "mocha": "^5.2.0"

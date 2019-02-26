@@ -8,7 +8,7 @@
     "parserOptions": {
         "sourceType": "module",
         "ecmaFeatures": {
-          "ecmaVersion": 2017,
+            "ecmaVersion": 2017,
             "experimentalObjectRestSpread": false,
             "jsx": false
         }
@@ -87,7 +87,7 @@
         "lines-between-class-members": "error",
         "max-depth": "error",
         "max-len": "off",
-        "max-lines": "warn",
+        "max-lines": "off",
         "max-nested-callbacks": "error",
         "max-params": "off",
         "max-statements": "off",
