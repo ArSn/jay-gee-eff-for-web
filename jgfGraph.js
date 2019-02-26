@@ -1,4 +1,3 @@
-const Validator = require('jsonschema').Validator;
 const check = require('check-types');
 const _ = require('lodash');
 const { cloneObject } = require('./common');
@@ -16,8 +15,6 @@ class JGFGraph {
      * @param {*} metadata about the graph
      */
     constructor(type = '', label = '', directed = true, metadata = null) {
-        this.validator = new Validator();
-
         this._nodes = {};
         this._edges = [];
 
