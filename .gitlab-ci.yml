@@ -1,0 +1,10 @@
+image: node:8.15.0
+
+cache:
+    paths:
+        - node_modules/
+
+all_tests:
+    script:
+        - yarn install
+        - yarn run test
