@@ -13,6 +13,7 @@ class JGFGraph {
      * @param {*} type graph classification
      * @param {*} label a text display for the graph
      * @param {*} directed true for a directed graph, false for an undirected graph
+     * @param {*} metadata about the graph
      */
     constructor(type = '', label = '', directed = true, metadata = null) {
         this.validator = new Validator();
@@ -156,6 +157,7 @@ class JGFGraph {
      * Adds a new node
      * @param {*} id Node id
      * @param {*} label Node label
+     * @param {*} metadata about the node
      */
     addNode(id, label, metadata = null) {
         if (id in this._nodes) {
