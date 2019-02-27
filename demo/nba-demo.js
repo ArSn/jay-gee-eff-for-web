@@ -11,13 +11,13 @@ const program = async () => {
     const node1Id = 'lebron-james#2544';
     const node1Label = 'LeBron James';
     const metadata1 = {
-        type: 'NBA Player'
+        type: 'NBA Player',
     };
 
     const node2Id = 'la-lakers#1610616839';
     const node2Label = 'Los Angeles Lakers';
     const metadata2 = {
-        type: 'NBA Team'
+        type: 'NBA Team',
     };
 
     const playerContractLabel = 'Plays for';

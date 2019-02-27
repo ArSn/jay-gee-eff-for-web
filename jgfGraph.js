@@ -123,7 +123,7 @@ class JGFGraph {
             directed: this._directed,
             metadata: {},
             nodes: [],
-            edges: []
+            edges: [],
         };
 
         if (check.assigned(this._metadata)) {
@@ -163,7 +163,7 @@ class JGFGraph {
 
         let newNode = {
             id,
-            label
+            label,
         };
 
         if (check.assigned(metadata)) {
@@ -267,7 +267,7 @@ class JGFGraph {
 
         let edge = {
             source,
-            target
+            target,
         };
         if (check.assigned(relation)) {
             edge.relation = relation;
@@ -341,7 +341,7 @@ class JGFGraph {
     get graphDimensions() {
         let dimensions = {
             nodes: 0,
-            edges: 0
+            edges: 0,
         };
 
         dimensions.nodes = Object.keys(this._nodes).length;
@@ -352,5 +352,5 @@ class JGFGraph {
 }
 
 module.exports = {
-    JGFGraph
+    JGFGraph,
 };

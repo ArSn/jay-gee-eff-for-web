@@ -15,5 +15,5 @@ const getMatchingfiles = (filenameWildcard) => {
 };
 
 module.exports = {
-    getMatchingfiles
+    getMatchingfiles,
 };
