@@ -179,12 +179,8 @@ class JGFGraph {
      * @param {*} nodes A collection of JGF node objects
      */
     addNodes(nodes) {
-        for (let node of nodes) {
-            if (node.id in this._nodes) {
-                throw new Error(`A node already exists with id = ${node.id}`);
-            }
-
-            this._nodes[node.id] = node;
+        for (let { id, label, metadata } of nodes) {
+            this.addNode(id, label, metadata);
         }
     }
 

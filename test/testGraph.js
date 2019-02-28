@@ -72,6 +72,29 @@ describe('Graph', () => {
             assert.throw(() => graph.addNodes(moreNodes), Error, 'A node already exists');
         })
 
+        it('should add multiple nodes at once', () => {
+            let container = new JGFContainer();
+            let graph = container.graph;
+
+            const moreNodes = [
+                {
+                    id: 'kevin-durant#4497',
+                    label: 'Kevin Durant'
+                },
+                {
+                    id: 'kyrie-irving#9876',
+                    label: 'Kyrie Irving'
+                }
+            ];
+
+            graph.addNodes(moreNodes);
+
+            assert.equal(graph.nodes[0].id, 'kevin-durant#4497');
+            assert.equal(graph.nodes[0].label, 'Kevin Durant');
+            assert.equal(graph.nodes[1].id, 'kyrie-irving#9876');
+            assert.equal(graph.nodes[1].label, 'Kyrie Irving');
+        })
+
     })
 
     describe('#updateNode', () => {
