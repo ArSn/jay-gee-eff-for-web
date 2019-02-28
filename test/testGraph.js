@@ -214,6 +214,26 @@ describe('Graph', () => {
             assert.equal(fn.calls[1].args[5], false);
 
         })
+
+        it('should add partial graph edges', () => {
+            let container = new JGFContainer(singleGraph = true);
+            let graph = container.graph;
+            graph.isPartial = true;
+
+            const node1Id = 'lebron-james#2544';
+            const node1Label = 'LeBron James';
+
+            const partialNode2Id = 'la-lakers#1610616839';
+
+            const playerContractRelation = 'Plays for';
+
+            graph.addNode(node1Id, node1Label);
+            graph.addEdge(node1Id, partialNode2Id, playerContractRelation);
+
+            let edges = graph.edges;
+            assert(edges !== null);
+            assert.equal(1, edges.length);
+        })
     })
 
     describe('#removeEdges', () => {
@@ -256,6 +276,49 @@ describe('Graph', () => {
             graph.addEdge(node1Id, node2Id, playerContractRelation);
 
             let edges = graph.getEdges(node1Id, node2Id, playerContractRelation);
+            assert(edges !== null);
+            assert.equal(1, edges.length);
+        })
+
+        it('should throw error if source or target node does not exist and graph is not partial', () => {
+            let container = new JGFContainer();
+            let graph = container.graph;
+
+            const node1Id = 'lebron-james#2254';
+            const node1Label = 'LeBron James';
+
+            const node2Id = 'la-lakers#1610616839';
+            const node2Label = 'Los Angeles Lakers';
+
+            const playerContractRelation = 'Plays for';
+
+            graph.addNode(node1Id, node1Label);
+            graph.addNode(node2Id, node2Label);
+            graph.addEdge(node1Id, node2Id, playerContractRelation);
+
+            assert.throws(() => { graph.getEdges('lebron-james#2254-nonsense', node2Id, playerContractRelation) }, Error);
+            assert.throws(() => { graph.getEdges(node1Id, 'la-lakers#1610616839-nonsense', playerContractRelation) }, Error);
+        })
+
+        xit('should return partial edges if graph is partial', () => {
+            let container = new JGFContainer();
+            let graph = container.graph;
+            graph.isPartial = true;
+
+            const node1Id = 'lebron-james#2254';
+            const node1Label = 'LeBron James';
+
+            const node2Id = 'la-lakers#1610616839';
+            const node2Label = 'Los Angeles Lakers';
+
+            const playerContractRelation = 'Plays for';
+
+            graph.addNode(node1Id, node1Label);
+            graph.addNode(node2Id, node2Label);
+            graph.addEdge(node1Id, node2Id, playerContractRelation);
+
+            // todo: this does not yet return partial edges if there are any, functionality missing
+            let edges = graph.getEdges('lebron-james#2254-nonsense', node2Id, playerContractRelation);
             assert(edges !== null);
             assert.equal(1, edges.length);
         })
