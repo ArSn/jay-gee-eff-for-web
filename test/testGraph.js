@@ -1,5 +1,6 @@
 const { assert } = require('chai');
 const { JGFContainer } = require('../jgfContainer');
+const simple = require('simple-mock');
 
 describe('Graph', () => {
     describe('#add graph node', () => {
@@ -156,6 +157,62 @@ describe('Graph', () => {
 
             assert.equal(1, graph.edges.length);
             assert.equal(playerContractRelation, graph.edges[0].relation);
+        })
+    })
+
+    describe('#addGraphEdges', () => {
+        it('should not call addEdge if no edges are passed', () => {
+            let container = new JGFContainer();
+            let graph = container.graph;
+
+            let fn = simple.mock(graph, 'addEdge').callOriginal();
+
+            graph.addEdges([]);
+
+            assert.equal(fn.callCount, 0);
+        })
+
+        it('should call addEdge with parameters if edges are passed', () => {
+            let container = new JGFContainer();
+            let graph = container.graph;
+
+            let fn = simple.mock(graph, 'addEdge').callFn(function () {});
+
+            graph.addEdges([
+                {
+                    source: 'firstSource',
+                    target: 'targetOne',
+                    relation: 'firstRelation',
+                    label: 'labelOne',
+                    metadata: 'someMetaData',
+                    directed: true,
+                },
+                {
+                    source: 'secondSource',
+                    target: 'targetTwo',
+                    relation: 'secondRelation',
+                    label: 'labelTwo',
+                    metadata: 'someMoreMetaData',
+                    directed: false,
+                }
+            ]);
+
+            assert.equal(fn.callCount, 2);
+
+            assert.equal(fn.calls[0].args[0], 'firstSource');
+            assert.equal(fn.calls[0].args[1], 'targetOne');
+            assert.equal(fn.calls[0].args[2], 'firstRelation');
+            assert.equal(fn.calls[0].args[3], 'labelOne');
+            assert.equal(fn.calls[0].args[4], 'someMetaData');
+            assert.equal(fn.calls[0].args[5], true);
+
+            assert.equal(fn.calls[1].args[0], 'secondSource');
+            assert.equal(fn.calls[1].args[1], 'targetTwo');
+            assert.equal(fn.calls[1].args[2], 'secondRelation');
+            assert.equal(fn.calls[1].args[3], 'labelTwo');
+            assert.equal(fn.calls[1].args[4], 'someMoreMetaData');
+            assert.equal(fn.calls[1].args[5], false);
+
         })
     })
 
