@@ -37,7 +37,7 @@ describe('Graph', () => {
         })
 
 
-        it('should throw an exception when adding a node that already exists', () => {
+        it('should throw error when adding a node that already exists', () => {
             let container = new JGFContainer();
             let graph = container.graph;
 
@@ -49,7 +49,7 @@ describe('Graph', () => {
             assert.throw(() => graph.addNode(nodeId, nodeLabel), Error, 'A node already exists');
         })
 
-        it('should throw an exception when adding nodes that already exist', () => {
+        it('should throw error when adding nodes that already exist', () => {
             let container = new JGFContainer();
             let graph = container.graph;
 
@@ -74,8 +74,8 @@ describe('Graph', () => {
 
     })
 
-    describe('#update graph node', () => {
-        it('should update a node\'s label', () => {
+    describe('#updateNode', () => {
+        it('should update label of node', () => {
             let container = new JGFContainer();
             let graph = container.graph;
 
@@ -86,6 +86,26 @@ describe('Graph', () => {
             const correctLabel = 'Kevin Love';
             graph.updateNode(nodeId, correctLabel);
             assert.equal(correctLabel, graph.nodes[0].label);
+        })
+
+        it('should update metadata of node', () => {
+            let container = new JGFContainer();
+            let graph = container.graph;
+
+            const nodeId = 'kevin-love#0000';
+            const nodeLabel = 'Meta Date';
+
+            graph.addNode(nodeId, nodeLabel);
+            const correctLabel = 'Meta Data';
+            graph.updateNode(nodeId, null, correctLabel);
+            assert.equal(correctLabel, graph.nodes[0].metadata);
+        })
+
+        it('throw error if node does not exist', () => {
+            let container = new JGFContainer();
+            let graph = container.graph;
+
+            assert.throws(() => graph.updateNode('nonsense-node'));
         })
 
     })
@@ -104,7 +124,7 @@ describe('Graph', () => {
             assert.equal(0, graph.nodes.length, 'After removeNode there should be zero nodes');
         })
 
-        it('should throw an exception when removing a non existant node', () => {
+        it('should throw error when removing a non existant node', () => {
             let container = new JGFContainer();
             let graph = container.graph;
 
@@ -127,7 +147,7 @@ describe('Graph', () => {
             assert(node.id === nodeId);
         })
 
-        it('should throw an exception when looking up a non existant node', () => {
+        it('should throw error when looking up a non existant node', () => {
             let container = new JGFContainer();
             let graph = container.graph;
 
@@ -188,6 +208,33 @@ describe('Graph', () => {
             assert.equal('awesomeLabel', graph.edges[1].label);
             assert.equal(null, graph.edges[1].metadata);
             assert.equal(true, graph.edges[1].directed);
+        })
+
+        it('should throw error if source or target nodes do not exist and graph is not partial', () => {
+            let container = new JGFContainer();
+            let graph = container.graph;
+
+            const node1Id = 'lebron-james#234';
+            const node1Label = 'LeBron James';
+
+            const node2Id = 'la-lakers#12345';
+            const node2Label = 'Los Angeles Lakers';
+
+            graph.addNode(node1Id, node1Label);
+            graph.addNode(node2Id, node2Label);
+
+            assert.throws(() => graph.addEdge(node1Id + '-nonsense', node2Id, 'Plays for', null, 'metaData'));
+            assert.throws(() => graph.addEdge(node1Id, node2Id + '-nonsense', 'Plays for', null, 'metaData'));
+            assert.throws(() => graph.addEdge(node1Id + '-nonsense', node2Id + '-nonsense', 'Plays for', null, 'metaData'));
+        })
+
+        it('should throw error if mandatory parameter is missing', () => {
+            let container = new JGFContainer();
+            let graph = container.graph;
+
+            assert.throws(() => graph.addEdge());
+            assert.throws(() => graph.addEdge('sourceNodeId'));
+            assert.throws(() => graph.addEdge(null, 'targetNodeId'));
         })
     })
 
@@ -327,8 +374,8 @@ describe('Graph', () => {
             graph.addNode(node2Id, node2Label);
             graph.addEdge(node1Id, node2Id, playerContractRelation);
 
-            assert.throws(() => { graph.getEdges('lebron-james#2254-nonsense', node2Id, playerContractRelation) }, Error);
-            assert.throws(() => { graph.getEdges(node1Id, 'la-lakers#1610616839-nonsense', playerContractRelation) }, Error);
+            assert.throws(() => graph.getEdges('lebron-james#2254-nonsense', node2Id, playerContractRelation));
+            assert.throws(() => graph.getEdges(node1Id, 'la-lakers#1610616839-nonsense', playerContractRelation));
         })
 
         xit('should return partial edges if graph is partial', () => {
