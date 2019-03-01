@@ -270,6 +270,7 @@ describe('Graph', () => {
             let fn = simple.mock(graph, 'addEdge').callOriginal();
 
             graph.addEdges([]);
+            graph.addEdges();
 
             assert.equal(fn.callCount, 0);
         })
@@ -548,6 +549,15 @@ describe('Graph', () => {
             });
 
             assert.doesNotHaveAnyKeys(graph.json, 'metadata');
+        })
+
+        // todo: verify that this is actually a valid test according to spec and it makes sense to handle it this way
+        //  - otherwise, remove this functionality
+        it('should not mark metadata partial if graph is not marked partial', () => {
+
+            let graph = new JGFGraph('someType', 'someLabel', true, { bla: 'blubb' });
+
+            assert.doesNotHaveAnyKeys(graph.json.metadata, 'isPartial');
         })
     })
 
