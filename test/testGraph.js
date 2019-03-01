@@ -426,6 +426,33 @@ describe('Graph', () => {
         })
     })
 
+    describe('#allMutators', () => {
+        it('should be able to set and get matadata', () => {
+            let graph = new JGFGraph();
+            assert.isNull(graph.metadata, 'metadata not null by default');
+
+            graph.metadata = 'some-setting-metadata';
+            assert.equal(graph.metadata, 'some-setting-metadata')
+        })
+
+        it('should be able to set and get label', () => {
+            let graph = new JGFGraph();
+            assert.equal(graph.label, '', 'label not an empty string by default');
+
+            graph.label = 'some-setting-label';
+            assert.equal(graph.label, 'some-setting-label')
+        })
+
+        it('should be able to set and get type', () => {
+            let graph = new JGFGraph();
+            assert.equal(graph.type, '', 'type not an empty string by default');
+
+            graph.type = 'some-setting-type';
+            assert.equal(graph.type, 'some-setting-type')
+        })
+
+    })
+
     describe('#getJsonProperty', () => {
         it('should create json representation of current state', () => {
             // todo: does not yet support metadata which is not a json object because it ALWAYS adds a "isPartial" property
