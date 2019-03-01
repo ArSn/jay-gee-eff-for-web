@@ -1,5 +1,6 @@
 const { assert } = require('chai');
 const { JGFContainer } = require('../jgfContainer');
+const { JGFGraph } = require('../jgfGraph');
 const simple = require('simple-mock');
 
 describe('Graph', () => {
@@ -422,6 +423,55 @@ describe('Graph', () => {
             let edges = graph.getEdges('lebron-james#2254-nonsense', node2Id, playerContractRelation);
             assert(edges !== null);
             assert.equal(1, edges.length);
+        })
+    })
+
+    describe('#getJsonProperty', () => {
+        it('should create json representation of current state', () => {
+            // todo: does not yet support metadata which is not a json object because it ALWAYS adds a "isPartial" property
+            //  to to the metadata upon json creation, add functionallty and then cover it with tests!
+            //  (IMHO) this should go to the grpah itself and not to the metadata
+            let graph = new JGFGraph('someType', 'someLabel', true, {bla:'some-meta-data'});
+            graph.isPartial = true;
+
+            graph.addNode('firstNodeId', 'blubb-label', 'whoopp');
+            graph.addNode('secondNodeId', 'bla-label', 'whaaat');
+
+            graph.addEdge('firstNodeId', 'secondNodeId', 'is-test-edge', 'edge-label', 'edge-metadata', true);
+
+            assert.deepEqual(graph.json, {
+                type: 'someType',
+                label: 'someLabel',
+                directed: true,
+                metadata: {bla: 'some-meta-data', isPartial: true},
+                nodes:
+                    [{id: 'firstNodeId', label: 'blubb-label', metadata: 'whoopp'},
+                        {id: 'secondNodeId', label: 'bla-label', metadata: 'whaaat'}],
+                edges:
+                    [{
+                        source: 'firstNodeId',
+                        target: 'secondNodeId',
+                        relation: 'is-test-edge',
+                        label: 'edge-label',
+                        metadata: 'edge-metadata',
+                        directed: true,
+                    }]
+            });
+        })
+
+        it('should not add metadata to json representation if metadata is empty', () => {
+            let graph = new JGFGraph('someType', 'someLabel', true, []);
+            graph.isPartial = true;
+
+            assert.deepEqual(graph.json, {
+                type: 'someType',
+                label: 'someLabel',
+                directed: true,
+                nodes: [],
+                edges: [],
+            });
+
+            assert.doesNotHaveAnyKeys(graph.json, 'metadata');
         })
     })
 
