@@ -426,6 +426,54 @@ describe('Graph', () => {
         })
     })
 
+    describe('#loadFromJson', () => {
+        it('should be able to set and get matadata', () => {
+            let graph = new JGFGraph();
+            graph.loadFromJSON({
+                type: 'someType',
+                label: 'someLabel',
+                directed: true,
+                metadata: {bla: 'some-meta-data', isPartial: true},
+                nodes:
+                    [
+                        {id: 'firstNodeId', label: 'blubb-label', metadata: 'whoopp'},
+                        {id: 'secondNodeId', label: 'bla-label', metadata: 'whaaat'},
+                    ],
+                edges:
+                    [{
+                        source: 'firstNodeId',
+                        target: 'secondNodeId',
+                        relation: 'is-test-edge',
+                        label: 'edge-label',
+                        metadata: 'edge-metadata',
+                        directed: true,
+                    }]
+            });
+
+            assert.equal(graph.type, 'someType');
+            assert.equal(graph.label, 'someLabel');
+            // todo: there is no mutator for graph.directed or something alike, and I wonder what this property is for,
+            //  since each edge has a config on its on whether it is directed or not, I can only imagine that this is
+            //  supposed to be used as a default "directed" setting when adding new edges, but this does not happen yet
+            //  --> therefore: clarify by spec and implement accordingly!
+            assert.deepEqual(graph.metadata, {bla: 'some-meta-data', isPartial: true});
+
+            assert.equal(graph.nodes[0].id, 'firstNodeId');
+            assert.equal(graph.nodes[0].label, 'blubb-label');
+            assert.equal(graph.nodes[0].metadata, 'whoopp');
+            assert.equal(graph.nodes[1].id, 'secondNodeId');
+            assert.equal(graph.nodes[1].label, 'bla-label');
+            assert.equal(graph.nodes[10].metadata, 'whaaat');
+
+            assert.equal(graph.edges[0].source, 'firstNodeId');
+            assert.equal(graph.edges[0].target, 'Node');
+            assert.equal(graph.edges[0].relation, 'is-test-edge');
+            assert.equal(graph.edges[0].label, 'edge-label');
+            assert.equal(graph.edges[0].metadata, 'edge-metadata');
+            assert.equal(graph.edges[0].directed, true);
+        })
+    })
+
     describe('#allMutators', () => {
         it('should be able to set and get matadata', () => {
             let graph = new JGFGraph();
@@ -450,7 +498,6 @@ describe('Graph', () => {
             graph.type = 'some-setting-type';
             assert.equal(graph.type, 'some-setting-type')
         })
-
     })
 
     describe('#getJsonProperty', () => {
@@ -472,8 +519,10 @@ describe('Graph', () => {
                 directed: true,
                 metadata: {bla: 'some-meta-data', isPartial: true},
                 nodes:
-                    [{id: 'firstNodeId', label: 'blubb-label', metadata: 'whoopp'},
-                        {id: 'secondNodeId', label: 'bla-label', metadata: 'whaaat'}],
+                    [
+                        {id: 'firstNodeId', label: 'blubb-label', metadata: 'whoopp'},
+                        {id: 'secondNodeId', label: 'bla-label', metadata: 'whaaat'},
+                    ],
                 edges:
                     [{
                         source: 'firstNodeId',
