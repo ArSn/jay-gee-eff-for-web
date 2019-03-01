@@ -463,10 +463,10 @@ describe('Graph', () => {
             assert.equal(graph.nodes[0].metadata, 'whoopp');
             assert.equal(graph.nodes[1].id, 'secondNodeId');
             assert.equal(graph.nodes[1].label, 'bla-label');
-            assert.equal(graph.nodes[10].metadata, 'whaaat');
+            assert.equal(graph.nodes[1].metadata, 'whaaat');
 
             assert.equal(graph.edges[0].source, 'firstNodeId');
-            assert.equal(graph.edges[0].target, 'Node');
+            assert.equal(graph.edges[0].target, 'secondNodeId');
             assert.equal(graph.edges[0].relation, 'is-test-edge');
             assert.equal(graph.edges[0].label, 'edge-label');
             assert.equal(graph.edges[0].metadata, 'edge-metadata');
