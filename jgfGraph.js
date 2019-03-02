@@ -33,6 +33,7 @@ class JGFGraph {
     loadFromJSON(graphJson) {
         this._type = graphJson.type;
         this._label = graphJson.label;
+        // todo: this makes the graph always directed (even if false is passed), I doubt that this was the intention here
         this._directed = graphJson.directed || true;
         this._metadata = graphJson.metadata;
 

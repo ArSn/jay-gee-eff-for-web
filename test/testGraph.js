@@ -401,6 +401,7 @@ describe('Graph', () => {
 
             assert.throws(() => graph.getEdges('lebron-james#2254-nonsense', node2Id, playerContractRelation));
             assert.throws(() => graph.getEdges(node1Id, 'la-lakers#1610616839-nonsense', playerContractRelation));
+            assert.throws(() => graph.getEdges('blubb', 'bla'));
         })
 
         xit('should return partial edges if graph is partial', () => {
@@ -428,7 +429,7 @@ describe('Graph', () => {
     })
 
     describe('#loadFromJson', () => {
-        it('should be able to set and get matadata', () => {
+        it('should load graph from json', () => {
             let graph = new JGFGraph();
             graph.loadFromJSON({
                 type: 'someType',
@@ -472,6 +473,35 @@ describe('Graph', () => {
             assert.equal(graph.edges[0].label, 'edge-label');
             assert.equal(graph.edges[0].metadata, 'edge-metadata');
             assert.equal(graph.edges[0].directed, true);
+        })
+
+        // todo: this test does not really seem reasonable, see related todo in JGFGraph.loadFromJSON
+        it('should always consider graphs that are loaded from json directed graphs', () => {
+            let graph = new JGFGraph();
+            graph.loadFromJSON({
+                directed: true,
+                nodes: [],
+                edges: [],
+            });
+
+            assert.isTrue(graph._directed);
+
+            graph = new JGFGraph();
+            graph.loadFromJSON({
+                directed: false,
+                nodes: [],
+                edges: [],
+            });
+
+            assert.isTrue(graph._directed);
+
+            graph = new JGFGraph();
+            graph.loadFromJSON({
+                nodes: [],
+                edges: [],
+            });
+
+            assert.isTrue(graph._directed);
         })
     })
 
