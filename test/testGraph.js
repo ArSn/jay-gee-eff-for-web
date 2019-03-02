@@ -404,6 +404,29 @@ describe('Graph', () => {
             assert.throws(() => graph.getEdges('blubb', 'bla'));
         })
 
+        // todo: this test should probably be removed once getting partial edges is supported
+        it('should return edges if graph is partial', () => {
+            let container = new JGFContainer();
+            let graph = container.graph;
+            graph.isPartial = true;
+
+            const node1Id = 'lebron-james#2254';
+            const node1Label = 'LeBron James';
+
+            const node2Id = 'la-lakers#1610616839';
+            const node2Label = 'Los Angeles Lakers';
+
+            const playerContractRelation = 'Plays for';
+
+            graph.addNode(node1Id, node1Label);
+            graph.addNode(node2Id, node2Label);
+            graph.addEdge(node1Id, node2Id, playerContractRelation);
+
+            let edges = graph.getEdges(node1Id, node2Id, playerContractRelation);
+            assert(edges !== null);
+            assert.equal(1, edges.length);
+        })
+
         xit('should return partial edges if graph is partial', () => {
             let container = new JGFContainer();
             let graph = container.graph;
