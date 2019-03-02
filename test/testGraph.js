@@ -359,6 +359,33 @@ describe('Graph', () => {
             graph.removeEdges(node1Id, node2Id, playerContractRelation);
             assert.equal(0, graph.edges.length, 'After removeEdges there should be zero edges');
         })
+
+        it('should only remove the edge specified by relation parameter', () => {
+            let container = new JGFContainer();
+            let graph = container.graph;
+
+            const node1Id = 'lebron-james#2254';
+            const node1Label = 'LeBron James';
+
+            const node2Id = 'la-lakers#1610616839';
+            const node2Label = 'Los Angeles Lakers';
+
+            const playerContractRelation = 'Plays for';
+            const salaryRelation = 'Gets his salary paid by';
+
+            graph.addNode(node1Id, node1Label);
+            graph.addNode(node2Id, node2Label);
+            graph.addEdge(node1Id, node2Id, playerContractRelation);
+            graph.addEdge(node1Id, node2Id, salaryRelation);
+            assert.equal(2, graph.edges.length);
+
+            graph.removeEdges(node1Id, node2Id, playerContractRelation);
+            assert.equal(1, graph.edges.length, 'One edge should remain after removing one specific relation');
+            assert.equal(salaryRelation, graph.edges[0].relation, 'Salary relation should still exist');
+
+            graph.removeEdges(node1Id, node2Id);
+            assert.equal(0, graph.edges.length, 'After removeEdges without relation parameter there should be zero edges');
+        })
     })
 
     describe('#getEdges', () => {
@@ -590,8 +617,7 @@ describe('Graph', () => {
         })
 
         it('should not add metadata to json representation if metadata is empty', () => {
-            let graph = new JGFGraph('someType', 'someLabel', true, []);
-            graph.isPartial = true;
+            let graph = new JGFGraph('someType', 'someLabel', true);
 
             assert.deepEqual(graph.json, {
                 type: 'someType',
