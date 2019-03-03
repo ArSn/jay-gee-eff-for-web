@@ -122,34 +122,48 @@ class JGFGraph {
             type: this._type,
             label: this._label,
             directed: this._directed,
-            metadata: {},
-            nodes: [],
-            edges: [],
+            nodes: this._getJsonNodes(),
+            edges: this._getJsonEdges(),
         };
 
-        if (check.assigned(this._metadata)) {
-            json.metadata = this._metadata;
-        }
-
-        if (this._isPartial) {
-            json.metadata.isPartial = this._isPartial;
-        }
-
-        if (_.isEmpty(json.metadata)) {
-            Reflect.deleteProperty(json, 'metadata');
-        }
-
-        if (check.assigned(this._nodes) && Object.keys(this._nodes).length > 0) {
-            json.nodes = Object.values(this._nodes);
-        }
-
-        if (check.assigned(this._edges) && this._edges.length > 0) {
-            json.edges = this._edges;
+        let metadata = this._getJsonMetadata();
+        if (metadata) {
+            json.metadata = metadata;
         }
 
         return cloneObject(json);
     }
 
+    _getJsonMetadata() {
+        let metadata = null;
+        if (check.assigned(this._metadata)) {
+            metadata = this._metadata;
+
+            if (this.isPartial) {
+                metadata.isPartial = true;
+            }
+        }
+
+        return metadata;
+    }
+
+    _getJsonNodes() {
+        let nodes = [];
+        if (check.assigned(this._nodes) && Object.keys(this._nodes).length > 0) {
+            nodes = Object.values(this._nodes);
+        }
+
+        return nodes;
+    }
+
+    _getJsonEdges() {
+        let edges = [];
+        if (check.assigned(this._edges) && this._edges.length > 0) {
+            edges = this._edges;
+        }
+
+        return edges;
+    }
 
     /**
      * Adds a new node
