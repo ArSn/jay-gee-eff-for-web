@@ -243,24 +243,8 @@ class JGFGraph {
      * @param {*} directed true for a directed edge, false for undirected
      */
     addEdge(source, target, relation = null, label = null, metadata = null, directed = null) {
-        if (!source) {
-            throw new Error('addEdge failed: source parameter is not valid');
-        }
-
-        if (!target) {
-            throw new Error('addEdge failed: target parameter is not valid');
-        }
-
-        if (!this._isPartial) {
-            // Validate that the edge's nodes exist
-            if (!(source in this._nodes)) {
-                throw new Error(`addEdge failed: source node isn't found in nodes. source = ${source}`);
-            }
-
-            if (!(target in this._nodes)) {
-                throw new Error(`addEdge failed: target node isn't found in nodes. target = ${target}`);
-            }
-        }
+        JGFGraph._guardAgainstEmptyNodeParams(source, target);
+        this._guardNonPartialGraphsAgainstNonExistentNodes(source, target);
 
         let edge = {
             source,
@@ -282,6 +266,31 @@ class JGFGraph {
         this._edges.push(edge);
     }
 
+    _guardNonPartialGraphsAgainstNonExistentNodes(source, target) {
+        if (!this.isPartial) {
+            this._guardAgainstNonExistentNodes(source, target);
+        }
+    }
+
+    _guardAgainstNonExistentNodes(source, target) {
+        if (!(source in this._nodes)) {
+            throw new Error(`addEdge failed: source node isn't found in nodes. source = ${source}`);
+        }
+
+        if (!(target in this._nodes)) {
+            throw new Error(`addEdge failed: target node isn't found in nodes. target = ${target}`);
+        }
+    }
+
+    static _guardAgainstEmptyNodeParams(source, target) {
+        if (!source) {
+            throw new Error('addEdge failed: source parameter is not valid');
+        }
+
+        if (!target) {
+            throw new Error('addEdge failed: target parameter is not valid');
+        }
+    }
 
     /**
      * Adds multiple edges
@@ -325,15 +334,7 @@ class JGFGraph {
      * @param {*} relation
      */
     getEdges(source, target, relation = '') {
-        if (!this.isPartial) {
-            if (!(source in this._nodes)) {
-                throw new Error(`A node doesn't exist with id = ${source}`);
-            }
-
-            if (!(target in this._nodes)) {
-                throw new Error(`A node doesn't exist with id = ${target}`);
-            }
-        }
+        this._guardNonPartialGraphsAgainstNonExistentNodes(source, target);
 
         let edges = _.filter(this._edges, (edge) => JGFGraph._isEdgeEqual(edge, source, target, relation));
 
