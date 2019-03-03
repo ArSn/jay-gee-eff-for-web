@@ -1,4 +1,9 @@
 version: "2"
+exclude_patterns:
+    - "coverage/" # only relevant on dev
+    - "demo/"
+    - "**/node_modules/"
+    - "**/test/"
 plugins:
     eslint:
         enabled: true

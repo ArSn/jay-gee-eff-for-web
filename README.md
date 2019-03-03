@@ -1,42 +1,33 @@
 [![Maintainability](https://api.codeclimate.com/v1/badges/1994476894037cadfcea/maintainability)](https://codeclimate.com/github/ArSn/jay-gee-eff-for-web/maintainability)
 [![Test Coverage](https://api.codeclimate.com/v1/badges/1994476894037cadfcea/test_coverage)](https://codeclimate.com/github/ArSn/jay-gee-eff-for-web/test_coverage)
+[![Code Climate technical debt](https://img.shields.io/codeclimate/tech-debt/ArSn/jay-gee-eff-for-web.svg?style=flat-square)](https://codeclimate.com/github/ArSn/jay-gee-eff-for-web/issues)
 
 # jay-gee-eff-for-web
-JGF - JSON Graph Format npm module - for web!
+JGF - A JSON Graph Format npm module to be used in the web (i.e. does not require nodejs to run). For more information about JSON Graph Format head over to [jsongraph/json-graph-specification](https://github.com/jsongraph/json-graph-specification#readme). 
 
-A library that provides a featureset for creating JGF in-memory graphs:
-1. Add nodes
-2. Add edges
-3. List nodes
-4. List edges
-5. Remove nodes
-6. Remove edges
-7. Lookup nodes by id
-8. Lookup edges by source and target nodes, with optional edge relation
-9. Update node properties and meta data
-10. TODO: Update edge properties and meta data
-    
+I will not include a list of features here since this package aims to completely fulfill the specification linked above.
 
 # Installation
-with npm
-```
-npm install jay-gee-eff-for-web
-```
-or with yarn
+
+with yarn
 ```
 yarn add jay-gee-eff-for-web
 ```
+or with npm
+```
+npm install jay-gee-eff-for-web
+```
 
 # Usage
-## Sample code
+## Example code
 
 ```javascript
-const { JGFContainer } = require('jay-gee-eff');
-const path = require('path');
+const { JGFContainer } = require('../index');
 
-const program = async () => {
+(() => {
+
     console.log('Building the NBA JGF Graph...');
-    let container = new JGFContainer(singleGraph = true);
+    let container = new JGFContainer();
     let graph = container.graph;
     graph.type = 'sports';
     graph.label = 'NBA Demo Graph';
@@ -44,13 +35,13 @@ const program = async () => {
     const node1Id = 'lebron-james#2544';
     const node1Label = 'LeBron James';
     const metadata1 = {
-        type: 'NBA Player'
+        type: 'NBA Player',
     };
 
     const node2Id = 'la-lakers#1610616839';
     const node2Label = 'Los Angeles Lakers';
     const metadata2 = {
-        type: 'NBA Team'
+        type: 'NBA Team',
     };
 
     const playerContractRelation = 'Plays for';
@@ -62,29 +53,20 @@ const program = async () => {
     console.log('Adding an edge...');
     graph.addEdge(node1Id, node2Id, playerContractRelation);
 
-    const filename = path.join(path.dirname(__filename), 'nba-graph.json');
-    console.log(`Saving to file -> ${filename}`);
-    await container.saveToFile(filename, prettyPrint = true);
-
-    console.log('Load the saved JGF file');
-    let container2 = new JGFContainer();
-    await container2.loadFromFile(filename);
-
     console.log('Graph nodes:');
-    for (let node of container2.graph.nodes) {
+    for (let node of container.graph.nodes) {
         console.log(`\t${node.label} {${node.metadata.type}}`);
     }
 
     console.log('Graph edges:');
-    for (let edge of container2.graph.edges) {
+    for (let edge of container.graph.edges) {
         console.log(`\t${edge.source} (->${edge.relation}->) ${edge.target}`);
     }
 
-    console.log('-- DONE --');
-};
+    console.log('Full JSON representation:');
+    console.log(JSON.stringify(graph.json));
 
-(async () => {
-    await program();
+    console.log('-- DONE --');
 })();
 ```
 
@@ -93,50 +75,51 @@ const program = async () => {
 Building the NBA JGF Graph...
 Adding two nodes...
 Adding an edge...
-Saving to file -> /test-jay-gee-eff/demo/nba-graph.json
-Load the saved JGF file
-loadFromFile, isSingleGraph: true
 Graph nodes:
 	LeBron James {NBA Player}
 	Los Angeles Lakers {NBA Team}
 Graph edges:
-	lebron-james#2544 (->Plays for->) la-lakers#1610616839    
+	lebron-james#2544 (->Plays for->) la-lakers#1610616839
+Full JSON representation:
+	[... see next headline in README.md ...]
 -- DONE --
 ```
 
-### The JGF output file (nba-graph.json)
+### The JSON output from example above
 ```json
 {
-    "graph": {
-        "type": "sports",
-        "label": "NBA Demo Graph",
-        "directed": true,
-        "nodes": [{
-            "id": "lebron-james#2544",
-            "label": "LeBron James",
-            "metadata": {
-                "type": "NBA Player"
-            }
-        }, {
-            "id": "la-lakers#1610616839",
-            "label": "Los Angeles Lakers",
-            "metadata": {
-                "type": "NBA Team"
-            }
-        }],
-        "edges": [{
-                "source": "lebron-james#2544",
-                "target": "la-lakers#1610616839",
-                "relation": "Plays for"
-            }
-        ]
+  "type": "sports",
+  "label": "NBA Demo Graph",
+  "directed": true,
+  "nodes": [
+    {
+      "id": "lebron-james#2544",
+      "label": "LeBron James",
+      "metadata": {
+        "type": "NBA Player"
+      }
+    },
+    {
+      "id": "la-lakers#1610616839",
+      "label": "Los Angeles Lakers",
+      "metadata": {
+        "type": "NBA Team"
+      }
     }
+  ],
+  "edges": [
+    {
+      "source": "lebron-james#2544",
+      "target": "la-lakers#1610616839",
+      "relation": "Plays for"
+    }
+  ]
 }
 ```
 
 # References
-## JGF Specification
+## JGF specification
 http://jsongraphformat.info/
 
-## Test Examples
+## Test examples
 Source: https://github.com/jsongraph/json-graph-specification/tree/master/examples
