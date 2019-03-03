@@ -296,17 +296,26 @@ class JGFGraph {
     }
 
     /**
+     * Checks whether the passed edge is equal to an edge with all other three passed params.
+     * @param {*} edge
+     * @param {*} source Source node id
+     * @param {*} target Target node id
+     * @param {*} relation Specific edge relation type to remove. If empty then all edges will be removed, regardless of their relation
+     */
+    static _isEdgeEqual(edge, source, target, relation) {
+        return edge.source === source &&
+            edge.target === target &&
+            (relation === '' || edge.relation === relation);
+    }
+
+    /**
      * Removes existing graph edges
      * @param {*} source Source node id
      * @param {*} target Target node id
      * @param {*} relation Specific edge relation type to remove. If empty then all edges will be removed, regardless of their relation
      */
     removeEdges(source, target, relation = '') {
-        _.remove(this._edges, (currentEdge) => {
-            return currentEdge.source === source &&
-                currentEdge.target === target &&
-                (relation === '' || currentEdge.relation === relation);
-        });
+        _.remove(this._edges, (edge) => JGFGraph._isEdgeEqual(edge, source, target, relation));
     }
 
     /**
@@ -326,11 +335,7 @@ class JGFGraph {
             }
         }
 
-        let edges = _.filter(this._edges, (edge) => {
-            return edge.source === source &&
-                edge.target === target &&
-                (relation === '' || edge.relation === relation);
-        });
+        let edges = _.filter(this._edges, (edge) => JGFGraph._isEdgeEqual(edge, source, target, relation));
 
         return cloneObject(edges);
     }
