@@ -1,0 +1,16 @@
+checks:
+    javascript: true
+build:
+    nodes:
+        analysis:
+            tests:
+                override:
+                    - js-scrutinizer-run
+        tests: true
+filter:
+    paths: ["dir1/*", "dir2/*"]
+    excluded_paths:
+        - "coverage/" # only relevant on dev
+        - "demo/"
+        - "node_modules/"
+        - "test/"
