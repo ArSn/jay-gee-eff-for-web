@@ -1,3 +1,5 @@
+[![Gitlab pipeline status](https://img.shields.io/gitlab/pipeline/ArSn23/jay-gee-eff-for-web.svg?label=tests)](https://gitlab.com/ArSn23/jay-gee-eff-for-web/pipelines)
+[![Scrutinizer Code Quality](https://scrutinizer-ci.com/g/ArSn/jay-gee-eff-for-web/badges/quality-score.png?b=master)](https://scrutinizer-ci.com/g/ArSn/jay-gee-eff-for-web/?branch=master)
 [![Maintainability](https://api.codeclimate.com/v1/badges/1994476894037cadfcea/maintainability)](https://codeclimate.com/github/ArSn/jay-gee-eff-for-web/maintainability)
 [![Test Coverage](https://api.codeclimate.com/v1/badges/1994476894037cadfcea/test_coverage)](https://codeclimate.com/github/ArSn/jay-gee-eff-for-web/test_coverage)
 [![Code Climate technical debt](https://img.shields.io/codeclimate/tech-debt/ArSn/jay-gee-eff-for-web.svg?style=flat-square)](https://codeclimate.com/github/ArSn/jay-gee-eff-for-web/issues)
