@@ -1,10 +1,10 @@
-const check = require('check-types');
 const { Guard } = require('./guard');
 
 /**
  * An edge object represents a edge between two nodes in a graph.
  */
 class JGFEdge {
+
     /**
      * Constructor
      * @param {string} source Source node id
@@ -42,9 +42,7 @@ class JGFEdge {
     }
 
     set metadata(metadata) {
-        if (check.assigned(metadata)) {
-            Guard.assertValidMetadata(metadata);
-        }
+        Guard.assertValidMetadataOrNull(metadata);
         this._metadata = metadata;
     }
 

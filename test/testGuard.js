@@ -30,6 +30,20 @@ describe('Guard', () => {
         });
     });
 
+    describe('#valid metadata or null', () => {
+        it('should throw error on invalid metadata', () => {
+            assert.throws(() => Guard.assertValidMetadataOrNull('bla'));
+            assert.throws(() => Guard.assertValidMetadataOrNull([]));
+            assert.throws(() => Guard.assertValidMetadataOrNull({}));
+        });
+
+        it('should not throw error valid metadata', () => {
+            assert.doesNotThrow(() => Guard.assertValidMetadataOrNull(null));
+            assert.doesNotThrow(() => Guard.assertValidMetadataOrNull({ some: 'data' }));
+            assert.doesNotThrow(() => Guard.assertValidMetadataOrNull({ some: 'data', more: 'stuff' }));
+        });
+    });
+
     describe('#valid directed', () => {
         it('should throw error on invalid directed', () => {
             assert.throws(() => Guard.assertValidDirected('bla'));

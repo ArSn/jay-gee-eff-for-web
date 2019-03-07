@@ -17,6 +17,12 @@ class Guard {
         }
     }
 
+    static assertValidMetadataOrNull(metadataOrNull) {
+        if (check.assigned(metadataOrNull)) {
+            Guard.assertValidMetadata(metadataOrNull);
+        }
+    }
+
     static assertValidDirected(directed) {
         if (!check.boolean(directed)) {
             throw new Error('Directed flag on an edge has to be boolean.');

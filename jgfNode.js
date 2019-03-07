@@ -1,4 +1,3 @@
-const check = require('check-types');
 const { Guard } = require('./guard');
 
 /**
@@ -19,9 +18,7 @@ class JGFNode {
     }
 
     set metadata(metadata) {
-        if (check.assigned(metadata)) {
-            Guard.assertValidMetadata(metadata);
-        }
+        Guard.assertValidMetadataOrNull(metadata);
         this._metadata = metadata;
     }
 
