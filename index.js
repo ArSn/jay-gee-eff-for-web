@@ -1,5 +1,10 @@
-const { JGFContainer } = require('./jgfContainer');
+const { JgfNode } = require('./jgfNode');
+const { JgfEdge } = require('./jgfEdge');
+const { JgfGraph } = require('./jgfGraph');
+
 
 module.exports = {
-    JGFContainer,
+    JgfNode,
+    JgfEdge,
+    JgfGraph,
 };

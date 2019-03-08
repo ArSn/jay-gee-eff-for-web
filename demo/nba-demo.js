@@ -1,9 +1,9 @@
-const { JGFContainer } = require('../index');
+const { JgfContainer } = require('../index');
 
 (() => {
 
-    console.log('Building the NBA JGF Graph...');
-    let container = new JGFContainer();
+    console.log('Building the NBA Jgf Graph...');
+    let container = new JgfContainer();
     let graph = container.graph;
     graph.type = 'sports';
     graph.label = 'NBA Demo Graph';

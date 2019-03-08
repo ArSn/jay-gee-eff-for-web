@@ -1,13 +1,13 @@
 const check = require('check-types');
 const _ = require('lodash');
 const { cloneObject } = require('./common');
-const { JGFEdge } = require('./jgfEdge');
+const { JgfEdge } = require('./jgfEdge');
 const { Guard } = require('./guard');
 
 /**
- * A single JGF graph instance, always contained in a parent JGFContainer
+ * A single Jgf graph instance, always contained in a parent JgfContainer
  */
-class JGFGraph {
+class JgfGraph {
 
     /**
      * Constructor
@@ -28,8 +28,8 @@ class JGFGraph {
 
 
     /**
-     * Loads the graph from a JGF JSON object
-     * @param {*} graphJson JGF JSON object
+     * Loads the graph from a Jgf JSON object
+     * @param {*} graphJson Jgf JSON object
      */
     loadFromJSON(graphJson) {
         this._type = graphJson.type;
@@ -58,7 +58,7 @@ class JGFGraph {
     }
 
     /**
-     * @param {JGFNode} node Node to be found.
+     * @param {JgfNode} node Node to be found.
      * @private
      */
     _nodeExists(node) {
@@ -105,7 +105,7 @@ class JGFGraph {
     }
 
     /**
-     * Returns the graph as JGF Json
+     * Returns the graph as Jgf Json
      */
     get json() {
         let json = {
@@ -135,7 +135,7 @@ class JGFGraph {
 
     /**
      * Adds a new node
-     * @param {JGFNode} node Node to be added.
+     * @param {JgfNode} node Node to be added.
      */
     addNode(node) {
         if (this._nodeExists(node)) {
@@ -148,7 +148,7 @@ class JGFGraph {
 
     /**
      * Adds multiple nodes
-     * @param {JGFNode[]} nodes A collection of JGF node objects.
+     * @param {JgfNode[]} nodes A collection of Jgf node objects.
      */
     addNodes(nodes) {
         for (let node of nodes) {
@@ -158,7 +158,7 @@ class JGFGraph {
 
     /**
      * Removes an existing graph node
-     * @param {JGFNode} node Node to be removed.
+     * @param {JgfNode} node Node to be removed.
      */
     removeNode(node) {
         if (!this._nodeExists(node)) {
@@ -178,7 +178,7 @@ class JGFGraph {
 
     /**
      * Adds an edge between a source node and a target node.
-     * @param {JGFEdge} edge Source node id
+     * @param {JgfEdge} edge Source node id
      */
     addEdge(edge) {
         this._guardAgainstNonExistentNodes(edge.source, edge.target);
@@ -197,7 +197,7 @@ class JGFGraph {
 
     /**
      * Adds multiple edges
-     * @param {JGFEdge[]} edges A collection of JGF edge objects.
+     * @param {JgfEdge[]} edges A collection of Jgf edge objects.
      */
     addEdges(edges) {
         for (let edge of edges) {
@@ -207,7 +207,7 @@ class JGFGraph {
 
     /**
      * Removes existing graph edge.
-     * @param {JGFEdge} edge Edge to be removed.
+     * @param {JgfEdge} edge Edge to be removed.
      */
     removeEdge(edge) {
         _.remove(this._edges, (existingEdge) => existingEdge.isEqualTo(edge, true));
@@ -222,7 +222,7 @@ class JGFGraph {
     getEdgesByNodes(source, target, relation = null) {
         this._guardAgainstNonExistentNodes(source, target);
 
-        let edge = new JGFEdge(source, target, relation);
+        let edge = new JgfEdge(source, target, relation);
 
         return _.filter(this._edges, (existingEdge) => existingEdge.isEqualTo(edge, check.assigned(relation)));
     }
@@ -236,5 +236,5 @@ class JGFGraph {
 }
 
 module.exports = {
-    JGFGraph,
+    JgfGraph,
 };

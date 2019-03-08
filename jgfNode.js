@@ -3,7 +3,7 @@ const { Guard } = require('./guard');
 /**
  * A node object represents a node in a graph.
  */
-class JGFNode {
+class JgfNode {
 
     /**
      * Constructor
@@ -28,5 +28,5 @@ class JGFNode {
 }
 
 module.exports = {
-    JGFNode,
+    JgfNode,
 };

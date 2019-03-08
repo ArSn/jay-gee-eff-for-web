@@ -1,26 +1,23 @@
 const { assert } = require('chai');
-const { JGFContainer } = require('../jgfContainer');
-const { JGFGraph } = require('../jgfGraph');
-const { JGFNode } = require('../jgfNode');
-const { JGFEdge } = require('../jgfEdge');
+const { JgfGraph, JgfNode, JgfEdge } = require('..');
 const simple = require('simple-mock');
 
 describe('Graph', () => {
     describe('#add node(s)', () => {
         it('should add a simple node', () => {
-            let graph = new JGFGraph();
+            let graph = new JgfGraph();
 
             const nodeId = 'lebron-james#2254';
             const nodeLabel = 'LeBron James';
 
-            graph.addNode(new JGFNode(nodeId, nodeLabel));
+            graph.addNode(new JgfNode(nodeId, nodeLabel));
             assert.equal(1, graph.nodes.length);
             assert.equal(nodeId, graph.nodes[0].id);
             assert.equal(nodeLabel, graph.nodes[0].label);
         });
 
         it('should add a node to a graph, with meta data', () => {
-            let graph = new JGFGraph();
+            let graph = new JgfGraph();
 
             const nodeId = 'kevin-durant#4497';
             const nodeLabel = 'Kevin Durant';
@@ -31,7 +28,7 @@ describe('Graph', () => {
                 shirt: 35
             };
 
-            graph.addNode(new JGFNode(nodeId, nodeLabel, metadata));
+            graph.addNode(new JgfNode(nodeId, nodeLabel, metadata));
             assert.equal(1, graph.nodes.length);
             assert.equal('Power Forward', graph.nodes[0].metadata.position);
             assert.equal(35, graph.nodes[0].metadata.shirt);
@@ -39,38 +36,38 @@ describe('Graph', () => {
 
 
         it('should throw error when adding a node that already exists', () => {
-            let graph = new JGFGraph();
+            let graph = new JgfGraph();
 
             const nodeId = 'kevin-durant#4497';
             const nodeLabel = 'Kevin Durant';
 
-            graph.addNode(new JGFNode(nodeId, nodeLabel));
+            graph.addNode(new JgfNode(nodeId, nodeLabel));
 
-            assert.throw(() => graph.addNode(new JGFNode(nodeId, nodeLabel)), Error, 'A node already exists');
+            assert.throw(() => graph.addNode(new JgfNode(nodeId, nodeLabel)), Error, 'A node already exists');
         });
 
         it('should throw error when adding nodes that already exist', () => {
-            let graph = new JGFGraph();
+            let graph = new JgfGraph();
 
             const nodeId = 'kevin-durant#4497';
             const nodeLabel = 'Kevin Durant';
 
-            graph.addNode(new JGFNode(nodeId, nodeLabel));
+            graph.addNode(new JgfNode(nodeId, nodeLabel));
 
             const moreNodes = [
-                new JGFNode(nodeId, nodeLabel),
-                new JGFNode('kyrie-irving#9876', 'Kyrie Irving'),
+                new JgfNode(nodeId, nodeLabel),
+                new JgfNode('kyrie-irving#9876', 'Kyrie Irving'),
             ];
 
             assert.throw(() => graph.addNodes(moreNodes), Error, 'A node already exists');
         });
 
         it('should add multiple nodes at once', () => {
-            let graph = new JGFGraph();
+            let graph = new JgfGraph();
 
             const moreNodes = [
-                new JGFNode('kevin-durant#4497', 'Kevin Durant'),
-                new JGFNode('kyrie-irving#9876', 'Kyrie Irving'),
+                new JgfNode('kevin-durant#4497', 'Kevin Durant'),
+                new JgfNode('kyrie-irving#9876', 'Kyrie Irving'),
             ];
 
             graph.addNodes(moreNodes);
@@ -85,19 +82,19 @@ describe('Graph', () => {
 
     describe('#removeNode', () => {
         it('should remove a node', () => {
-            let graph = new JGFGraph();
+            let graph = new JgfGraph();
 
             const nodeId = 'kevin-durant#4497';
             const nodeLabel = 'Kevin Durant';
 
-            graph.addNode(new JGFNode(nodeId, nodeLabel));
+            graph.addNode(new JgfNode(nodeId, nodeLabel));
 
-            graph.removeNode(new JGFNode(nodeId, nodeLabel));
+            graph.removeNode(new JgfNode(nodeId, nodeLabel));
             assert.equal(0, graph.nodes.length, 'After removeNode there should be zero nodes');
         });
 
         it('should throw error when removing a non existant node', () => {
-            let graph = new JGFGraph();
+            let graph = new JgfGraph();
 
             assert.throws(() => graph.removeNode('some dummy id'), 'A node does not exist');
         });
@@ -105,12 +102,12 @@ describe('Graph', () => {
 
     describe('#getNodeById', () => {
         it('should lookup a node by id', () => {
-            let graph = new JGFGraph();
+            let graph = new JgfGraph();
 
             const nodeId = 'kevin-durant#4497';
             const nodeLabel = 'Kevin Durant';
 
-            graph.addNode(new JGFNode(nodeId, nodeLabel));
+            graph.addNode(new JgfNode(nodeId, nodeLabel));
 
             let node = graph.getNodeById(nodeId);
             assert(node !== null);
@@ -118,7 +115,7 @@ describe('Graph', () => {
         });
 
         it('should throw error when looking up a non existant node', () => {
-            let graph = new JGFGraph();
+            let graph = new JgfGraph();
 
             assert.throws(() => graph.getNodeById('some dummy id'), 'A node does not exist');
         });
@@ -126,7 +123,7 @@ describe('Graph', () => {
 
     describe('#addEdge', () => {
         it('should add a simple edge to a graph', () => {
-            let graph = new JGFGraph();
+            let graph = new JgfGraph();
 
             const node1Id = 'lebron-james#2254';
             const node1Label = 'LeBron James';
@@ -136,19 +133,19 @@ describe('Graph', () => {
 
             const playerContractRelation = 'Plays for';
 
-            graph.addNode(new JGFNode(node1Id, node1Label));
-            graph.addNode(new JGFNode(node2Id, node2Label));
+            graph.addNode(new JgfNode(node1Id, node1Label));
+            graph.addNode(new JgfNode(node2Id, node2Label));
 
             assert.equal(2, graph.nodes.length);
 
-            graph.addEdge(new JGFEdge(node1Id, node2Id, playerContractRelation));
+            graph.addEdge(new JgfEdge(node1Id, node2Id, playerContractRelation));
 
             assert.equal(1, graph.edges.length);
             assert.equal(playerContractRelation, graph.edges[0].relation);
         });
 
         it('should throw error if source or target nodes do not exist', () => {
-            let graph = new JGFGraph();
+            let graph = new JgfGraph();
 
             const node1Id = 'lebron-james#234';
             const node1Label = 'LeBron James';
@@ -156,16 +153,16 @@ describe('Graph', () => {
             const node2Id = 'la-lakers#12345';
             const node2Label = 'Los Angeles Lakers';
 
-            graph.addNode(new JGFNode(node1Id, node1Label));
-            graph.addNode(new JGFNode(node2Id, node2Label));
+            graph.addNode(new JgfNode(node1Id, node1Label));
+            graph.addNode(new JgfNode(node2Id, node2Label));
 
-            assert.throws(() => graph.addEdge(new JGFEdge(node1Id + '-nonsense', node2Id, 'Plays for', null, 'metaData')));
-            assert.throws(() => graph.addEdge(new JGFEdge(node1Id, node2Id + '-nonsense', 'Plays for', null, 'metaData')));
-            assert.throws(() => graph.addEdge(new JGFEdge(node1Id + '-nonsense', node2Id + '-nonsense', 'Plays for', null, 'metaData')));
+            assert.throws(() => graph.addEdge(new JgfEdge(node1Id + '-nonsense', node2Id, 'Plays for', null, 'metaData')));
+            assert.throws(() => graph.addEdge(new JgfEdge(node1Id, node2Id + '-nonsense', 'Plays for', null, 'metaData')));
+            assert.throws(() => graph.addEdge(new JgfEdge(node1Id + '-nonsense', node2Id + '-nonsense', 'Plays for', null, 'metaData')));
         });
 
         it('should throw error if mandatory parameter is missing', () => {
-            let graph = new JGFGraph();
+            let graph = new JgfGraph();
 
             assert.throws(() => graph.addEdge());
             assert.throws(() => graph.addEdge('sourceNodeId'));
@@ -175,7 +172,7 @@ describe('Graph', () => {
 
     describe('#addEdges', () => {
         it('should not call addEdge if no edges are passed', () => {
-            let graph = new JGFGraph();
+            let graph = new JgfGraph();
 
             let fn = simple.mock(graph, 'addEdge').callOriginal();
 
@@ -185,12 +182,12 @@ describe('Graph', () => {
         });
 
         it('should call addEdge for each edge', () => {
-            let graph = new JGFGraph();
+            let graph = new JgfGraph();
 
             let fn = simple.mock(graph, 'addEdge').callFn(function () {});
 
-            const edgeOne = new JGFEdge('firstSource', 'targetOne', 'targetOne', 'labelOne', { some: 'stuff' }, true);
-            const edgeTwo = new JGFEdge('secondSource', 'targetTwo', 'secondRelation', 'labelTwo', { other: 'things' }, false);
+            const edgeOne = new JgfEdge('firstSource', 'targetOne', 'targetOne', 'labelOne', { some: 'stuff' }, true);
+            const edgeTwo = new JgfEdge('secondSource', 'targetTwo', 'secondRelation', 'labelTwo', { other: 'things' }, false);
 
             graph.addEdges([
                 edgeOne,
@@ -206,7 +203,7 @@ describe('Graph', () => {
 
     describe('#removeEdge', () => {
         it('should remove a graph edge', () => {
-            let graph = new JGFGraph();
+            let graph = new JgfGraph();
 
             const node1Id = 'lebron-james#2254';
             const node1Label = 'LeBron James';
@@ -216,16 +213,16 @@ describe('Graph', () => {
 
             const playerContractRelation = 'Plays for';
 
-            graph.addNode(new JGFNode(node1Id, node1Label));
-            graph.addNode(new JGFNode(node2Id, node2Label));
-            graph.addEdge(new JGFEdge(node1Id, node2Id, playerContractRelation));
+            graph.addNode(new JgfNode(node1Id, node1Label));
+            graph.addNode(new JgfNode(node2Id, node2Label));
+            graph.addEdge(new JgfEdge(node1Id, node2Id, playerContractRelation));
 
-            graph.removeEdge(new JGFEdge(node1Id, node2Id, playerContractRelation));
+            graph.removeEdge(new JgfEdge(node1Id, node2Id, playerContractRelation));
             assert.equal(0, graph.edges.length, 'After removeEdges there should be zero edges');
         });
 
         it('should only remove the edge specified by relation parameter', () => {
-            let graph = new JGFGraph();
+            let graph = new JgfGraph();
 
             const node1Id = 'lebron-james#2254';
             const node1Label = 'LeBron James';
@@ -236,27 +233,27 @@ describe('Graph', () => {
             const playerContractRelation = 'Plays for';
             const salaryRelation = 'Gets his salary paid by';
 
-            graph.addNode(new JGFNode(node1Id, node1Label));
-            graph.addNode(new JGFNode(node2Id, node2Label));
-            graph.addEdge(new JGFEdge(node1Id, node2Id, playerContractRelation));
-            graph.addEdge(new JGFEdge(node1Id, node2Id, salaryRelation));
+            graph.addNode(new JgfNode(node1Id, node1Label));
+            graph.addNode(new JgfNode(node2Id, node2Label));
+            graph.addEdge(new JgfEdge(node1Id, node2Id, playerContractRelation));
+            graph.addEdge(new JgfEdge(node1Id, node2Id, salaryRelation));
             assert.equal(graph.edges.length, 2);
 
-            graph.removeEdge(new JGFEdge(node1Id, node2Id, playerContractRelation));
+            graph.removeEdge(new JgfEdge(node1Id, node2Id, playerContractRelation));
             assert.equal(graph.edges.length, 1, 'One edge should remain after removing one specific relation');
             assert.equal(salaryRelation, graph.edges[0].relation, 'Salary relation should still exist');
 
-            graph.removeEdge(new JGFEdge(node1Id, node2Id));
+            graph.removeEdge(new JgfEdge(node1Id, node2Id));
             assert.equal(graph.edges.length, 1, 'After removeEdges without relation parameter second edge should still be there due to omitting relation');
 
-            graph.removeEdge(new JGFEdge(node1Id, node2Id, salaryRelation));
+            graph.removeEdge(new JgfEdge(node1Id, node2Id, salaryRelation));
             assert.equal(graph.edges.length, 0, 'After removeEdges with relation parameter there should be zero edges');
         });
     });
 
     describe('#getEdgesByNodes', () => {
         it('should lookup edges', () => {
-            let graph = new JGFGraph();
+            let graph = new JgfGraph();
 
             const node1Id = 'lebron-james#2254';
             const node1Label = 'LeBron James';
@@ -266,10 +263,10 @@ describe('Graph', () => {
 
             const playerContractRelation = 'Plays for';
 
-            graph.addNode(new JGFNode(node1Id, node1Label));
-            graph.addNode(new JGFNode(node2Id, node2Label));
+            graph.addNode(new JgfNode(node1Id, node1Label));
+            graph.addNode(new JgfNode(node2Id, node2Label));
 
-            const expectedEdge = new JGFEdge(node1Id, node2Id, playerContractRelation)
+            const expectedEdge = new JgfEdge(node1Id, node2Id, playerContractRelation)
             graph.addEdge(expectedEdge);
 
             let edges = graph.getEdgesByNodes(node1Id, node2Id, playerContractRelation);
@@ -278,7 +275,7 @@ describe('Graph', () => {
         });
 
         it('should throw error if source or target node does not exist and graph is not partial', () => {
-            let graph = new JGFGraph();
+            let graph = new JgfGraph();
 
             const node1Id = 'lebron-james#2254';
             const node1Label = 'LeBron James';
@@ -288,9 +285,9 @@ describe('Graph', () => {
 
             const playerContractRelation = 'Plays for';
 
-            graph.addNode(new JGFNode(node1Id, node1Label));
-            graph.addNode(new JGFNode(node2Id, node2Label));
-            graph.addEdge(new JGFEdge(node1Id, node2Id, playerContractRelation));
+            graph.addNode(new JgfNode(node1Id, node1Label));
+            graph.addNode(new JgfNode(node2Id, node2Label));
+            graph.addEdge(new JgfEdge(node1Id, node2Id, playerContractRelation));
 
             assert.throws(() => graph.getEdgesByNodes('lebron-james#2254-nonsense', node2Id, playerContractRelation));
             assert.throws(() => graph.getEdgesByNodes(node1Id, 'la-lakers#1610616839-nonsense', playerContractRelation));
@@ -300,7 +297,7 @@ describe('Graph', () => {
 
     xdescribe('#loadFromJson', () => {
         it('should load graph from json', () => {
-            let graph = new JGFGraph();
+            let graph = new JgfGraph();
             graph.loadFromJSON({
                 type: 'someType',
                 label: 'someLabel',
@@ -345,9 +342,9 @@ describe('Graph', () => {
             assert.equal(graph.edges[0].directed, true);
         })
 
-        // todo: this test does not really seem reasonable, see related todo in JGFGraph.loadFromJSON
+        // todo: this test does not really seem reasonable, see related todo in JgfGraph.loadFromJSON
         it('should always consider graphs that are loaded from json directed graphs', () => {
-            let graph = new JGFGraph();
+            let graph = new JgfGraph();
             graph.loadFromJSON({
                 directed: true,
                 nodes: [],
@@ -356,7 +353,7 @@ describe('Graph', () => {
 
             assert.isTrue(graph._directed);
 
-            graph = new JGFGraph();
+            graph = new JgfGraph();
             graph.loadFromJSON({
                 directed: false,
                 nodes: [],
@@ -365,7 +362,7 @@ describe('Graph', () => {
 
             assert.isTrue(graph._directed);
 
-            graph = new JGFGraph();
+            graph = new JgfGraph();
             graph.loadFromJSON({
                 nodes: [],
                 edges: [],
@@ -377,7 +374,7 @@ describe('Graph', () => {
 
     describe('#mutators', () => {
         it('should be able to set and get matadata', () => {
-            let graph = new JGFGraph();
+            let graph = new JgfGraph();
             assert.isNull(graph.metadata, 'metadata not null by default');
 
             const metadata = { bla: 'some-setting-metadata' };
@@ -392,7 +389,7 @@ describe('Graph', () => {
             // todo: does not yet support metadata which is not a json object because it ALWAYS adds a "isPartial" property
             //  to to the metadata upon json creation, add functionallty and then cover it with tests!
             //  (IMHO) this should go to the grpah itself and not to the metadata
-            let graph = new JGFGraph('someType', 'someLabel', true, {bla:'some-meta-data'});
+            let graph = new JgfGraph('someType', 'someLabel', true, {bla:'some-meta-data'});
             graph.isPartial = true;
 
             graph.addNode('firstNodeId', 'blubb-label', 'whoopp');
@@ -423,7 +420,7 @@ describe('Graph', () => {
         })
 
         it('should not add metadata to json representation if metadata is empty', () => {
-            let graph = new JGFGraph('someType', 'someLabel', true);
+            let graph = new JgfGraph('someType', 'someLabel', true);
 
             assert.deepEqual(graph.json, {
                 type: 'someType',
@@ -440,7 +437,7 @@ describe('Graph', () => {
         //  - otherwise, remove this functionality
         it('should not mark metadata partial if graph is not marked partial', () => {
 
-            let graph = new JGFGraph('someType', 'someLabel', true, { bla: 'blubb' });
+            let graph = new JgfGraph('someType', 'someLabel', true, { bla: 'blubb' });
 
             assert.doesNotHaveAnyKeys(graph.json.metadata, 'isPartial');
         })
@@ -448,7 +445,7 @@ describe('Graph', () => {
 
     describe('#graphDimensions', () => {
         it('should return zero dimensions for an empty graph', () => {
-            let graph = new JGFGraph();
+            let graph = new JgfGraph();
 
             let dimensions = graph.graphDimensions;
             assert.equal(0, dimensions.nodes);
@@ -457,12 +454,11 @@ describe('Graph', () => {
 
 
         it('should return valid dimensions for a non-empty graph', () => {
-            let container = new JGFContainer();
-            let graph = container.graph;
+            let graph = new JgfGraph();
 
-            graph.addNode(new JGFNode('node1', 'nodeTypeA'));
-            graph.addNode(new JGFNode('node2', 'nodeTypeB'));
-            graph.addEdge(new JGFEdge('node1', 'node2', 'edgeTypeC'));
+            graph.addNode(new JgfNode('node1', 'nodeTypeA'));
+            graph.addNode(new JgfNode('node2', 'nodeTypeB'));
+            graph.addEdge(new JgfEdge('node1', 'node2', 'edgeTypeC'));
 
             let dimensions = graph.graphDimensions;
             assert.equal(2, dimensions.nodes);

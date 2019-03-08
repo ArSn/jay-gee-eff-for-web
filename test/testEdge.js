@@ -1,10 +1,10 @@
 const { assert } = require('chai');
-const { JGFEdge } = require('../jgfEdge');
+const { JgfEdge } = require('..');
 
 describe('Edge', () => {
     describe('#constructor', () => {
         it('should set passed parameters to properties', () => {
-            let edge = new JGFEdge('earth', 'moon', 'has-satellite', 'Earth Moon', { distance: 'about 1 light second' }, false);
+            let edge = new JgfEdge('earth', 'moon', 'has-satellite', 'Earth Moon', { distance: 'about 1 light second' }, false);
 
             assert.equal(edge.source, 'earth');
             assert.equal(edge.target, 'moon');
@@ -15,7 +15,7 @@ describe('Edge', () => {
         });
 
         it('should allow omitting optional parameters', () => {
-            let edge = new JGFEdge('earth', 'moon');
+            let edge = new JgfEdge('earth', 'moon');
 
             assert.equal(edge.source, 'earth');
             assert.equal(edge.target, 'moon');
@@ -28,7 +28,7 @@ describe('Edge', () => {
 
     describe('#mutators', () => {
         it('should throw error on setting invalid source id or target id', () => {
-            let edge = new JGFEdge('earth', 'moon');
+            let edge = new JgfEdge('earth', 'moon');
 
             assert.throws(() => edge.source = null);
             assert.throws(() => edge.source = 2);
@@ -40,21 +40,21 @@ describe('Edge', () => {
         });
 
         it('should set and get valid source', () => {
-            let edge = new JGFEdge('earth', 'moon');
+            let edge = new JgfEdge('earth', 'moon');
 
             edge.source = 'orbit';
             assert.equal(edge.source, 'orbit');
         });
 
         it('should set and get valid target', () => {
-            let edge = new JGFEdge('earth', 'moon');
+            let edge = new JgfEdge('earth', 'moon');
 
             edge.target = 'orbit';
             assert.equal(edge.target, 'orbit');
         });
 
         it('should throw error on setting invalid metadata', () => {
-            let edge = new JGFEdge('earth', 'moon');
+            let edge = new JgfEdge('earth', 'moon');
 
             assert.throws(() => edge.metadata = 2);
             assert.throws(() => edge.metadata = []);
@@ -62,7 +62,7 @@ describe('Edge', () => {
         });
 
         it('should set and get valid metadata', () => {
-            let edge = new JGFEdge('earth', 'moon');
+            let edge = new JgfEdge('earth', 'moon');
 
             edge.metadata = { bla: 'bli' };
             assert.deepEqual(edge.metadata, { bla: 'bli' });
@@ -72,7 +72,7 @@ describe('Edge', () => {
         });
 
         it('should throw error on setting invalid directed', () => {
-            let edge = new JGFEdge('earth', 'moon');
+            let edge = new JgfEdge('earth', 'moon');
 
             assert.throws(() => edge.directed = 2);
             assert.throws(() => edge.directed = []);
@@ -81,7 +81,7 @@ describe('Edge', () => {
         });
 
         it('should set and get valid directed', () => {
-            let edge = new JGFEdge('earth', 'moon');
+            let edge = new JgfEdge('earth', 'moon');
 
             edge.directed = true;
             assert.isTrue(edge.directed);
@@ -93,55 +93,55 @@ describe('Edge', () => {
 
     describe('#is equal to', () => {
         it('should know equal edges are equal', () => {
-            let edge = new JGFEdge('earth', 'moon');
-            let equalEdge = new JGFEdge('earth', 'moon');
+            let edge = new JgfEdge('earth', 'moon');
+            let equalEdge = new JgfEdge('earth', 'moon');
 
             assert.isTrue(edge.isEqualTo(equalEdge, true));
 
-            edge = new JGFEdge('earth', 'moon', 'is-satellite');
-            equalEdge = new JGFEdge('earth', 'moon', 'is-satellite');
+            edge = new JgfEdge('earth', 'moon', 'is-satellite');
+            equalEdge = new JgfEdge('earth', 'moon', 'is-satellite');
 
             assert.isTrue(edge.isEqualTo(equalEdge));
             assert.isTrue(edge.isEqualTo(equalEdge, true));
 
-            edge = new JGFEdge('earth', 'moon', 'is-satellite');
-            equalEdge = new JGFEdge('earth', 'moon', 'attracts');
+            edge = new JgfEdge('earth', 'moon', 'is-satellite');
+            equalEdge = new JgfEdge('earth', 'moon', 'attracts');
 
             assert.isTrue(edge.isEqualTo(equalEdge));
             assert.isTrue(edge.isEqualTo(equalEdge, false));
 
-            edge = new JGFEdge('earth', 'moon', 'is-satellite', 'does-not');
-            equalEdge = new JGFEdge('earth', 'moon', 'is-satellite', 'influence-equal');
+            edge = new JgfEdge('earth', 'moon', 'is-satellite', 'does-not');
+            equalEdge = new JgfEdge('earth', 'moon', 'is-satellite', 'influence-equal');
 
             assert.isTrue(edge.isEqualTo(equalEdge));
             assert.isTrue(edge.isEqualTo(equalEdge, true));
 
-            edge = new JGFEdge('earth', 'moon', 'is-satellite', 'does-not');
-            equalEdge = new JGFEdge('earth', 'moon', 'attracts', 'influence-equal');
+            edge = new JgfEdge('earth', 'moon', 'is-satellite', 'does-not');
+            equalEdge = new JgfEdge('earth', 'moon', 'attracts', 'influence-equal');
 
             assert.isTrue(edge.isEqualTo(equalEdge));
             assert.isTrue(edge.isEqualTo(equalEdge, false));
         });
 
         it('should know different edges are not equal', () => {
-            let edge = new JGFEdge('earth', 'moon');
-            let differentEdge = new JGFEdge('earth', 'sun');
+            let edge = new JgfEdge('earth', 'moon');
+            let differentEdge = new JgfEdge('earth', 'sun');
 
             assert.isFalse(edge.isEqualTo(differentEdge));
             assert.isFalse(edge.isEqualTo(differentEdge, true));
 
-            edge = new JGFEdge('earth', 'moon', 'is-satellite');
-            differentEdge = new JGFEdge('earth', 'moon', 'attracts');
+            edge = new JgfEdge('earth', 'moon', 'is-satellite');
+            differentEdge = new JgfEdge('earth', 'moon', 'attracts');
 
             assert.isFalse(edge.isEqualTo(differentEdge, true));
 
-            edge = new JGFEdge('earth', 'moon', 'same-relation', 'extra-params-dont-matter');
-            differentEdge = new JGFEdge('earth', 'sun', 'same-relation', 'extra-params-dont-matter');
+            edge = new JgfEdge('earth', 'moon', 'same-relation', 'extra-params-dont-matter');
+            differentEdge = new JgfEdge('earth', 'sun', 'same-relation', 'extra-params-dont-matter');
 
             assert.isFalse(edge.isEqualTo(differentEdge, true));
 
-            edge = new JGFEdge('earth', 'moon', 'is-satellite', 'extra-params-dont-matter');
-            differentEdge = new JGFEdge('earth', 'moon', 'attracts', 'extra-params-dont-matter');
+            edge = new JgfEdge('earth', 'moon', 'is-satellite', 'extra-params-dont-matter');
+            differentEdge = new JgfEdge('earth', 'moon', 'attracts', 'extra-params-dont-matter');
 
             assert.isFalse(edge.isEqualTo(differentEdge, true));
         });

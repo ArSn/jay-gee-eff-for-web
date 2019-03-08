@@ -3,7 +3,7 @@ const { Guard } = require('./guard');
 /**
  * An edge object represents a edge between two nodes in a graph.
  */
-class JGFEdge {
+class JgfEdge {
 
     /**
      * Constructor
@@ -61,7 +61,7 @@ class JGFEdge {
 
     /**
      * Determines whether this edge is equal to the passed edge.
-     * @param {JGFEdge} edge The edge to compare to.
+     * @param {JgfEdge} edge The edge to compare to.
      * @param {boolean} compareRelation Whether or not to compare the relation as well.
      */
     isEqualTo(edge, compareRelation = false) {
@@ -72,5 +72,5 @@ class JGFEdge {
 }
 
 module.exports = {
-    JGFEdge,
+    JgfEdge,
 };

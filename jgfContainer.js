@@ -1,9 +1,9 @@
-const { JGFGraph } = require('./jgfGraph');
+const { JgfGraph } = require('./jgfGraph');
 
 /**
- * JGF Container (main class) of zero or more JGF graphs
+ * Jgf Container (main class) of zero or more Jgf graphs
  */
-class JGFContainer {
+class JgfContainer {
 
     /**
      * Constructor
@@ -51,7 +51,7 @@ class JGFContainer {
      * Adds an empty graph
      */
     addEmptyGraph() {
-        let graph = new JGFGraph();
+        let graph = new JgfGraph();
         this._graphs.push(graph);
 
         return graph;
@@ -59,5 +59,5 @@ class JGFContainer {
 }
 
 module.exports = {
-    JGFContainer,
+    JgfContainer,
 };
