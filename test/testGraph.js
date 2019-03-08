@@ -375,31 +375,17 @@ describe('Graph', () => {
         })
     })
 
-    xdescribe('#allMutators', () => {
+    describe('#mutators', () => {
         it('should be able to set and get matadata', () => {
             let graph = new JGFGraph();
             assert.isNull(graph.metadata, 'metadata not null by default');
 
-            graph.metadata = 'some-setting-metadata';
-            assert.equal(graph.metadata, 'some-setting-metadata')
-        })
+            const metadata = { bla: 'some-setting-metadata' };
 
-        it('should be able to set and get label', () => {
-            let graph = new JGFGraph();
-            assert.equal(graph.label, '', 'label not an empty string by default');
-
-            graph.label = 'some-setting-label';
-            assert.equal(graph.label, 'some-setting-label')
-        })
-
-        it('should be able to set and get type', () => {
-            let graph = new JGFGraph();
-            assert.equal(graph.type, '', 'type not an empty string by default');
-
-            graph.type = 'some-setting-type';
-            assert.equal(graph.type, 'some-setting-type')
-        })
-    })
+            graph.metadata = metadata;
+            assert.equal(graph.metadata, metadata);
+        });
+    });
 
     xdescribe('#getJsonProperty', () => {
         it('should create json representation of current state', () => {
@@ -460,7 +446,7 @@ describe('Graph', () => {
         })
     })
 
-    xdescribe('#graphDimensions', () => {
+    describe('#graphDimensions', () => {
         it('should return zero dimensions for an empty graph', () => {
             let container = new JGFContainer();
             let graph = container.graph;
@@ -468,7 +454,7 @@ describe('Graph', () => {
             let dimensions = graph.graphDimensions;
             assert.equal(0, dimensions.nodes);
             assert.equal(0, dimensions.edges);
-        })
+        });
 
 
         it('should return valid dimensions for a non-empty graph', () => {
@@ -482,7 +468,7 @@ describe('Graph', () => {
             let dimensions = graph.graphDimensions;
             assert.equal(2, dimensions.nodes);
             assert.equal(1, dimensions.edges);
-        })
-    })
+        });
+    });
 
 });

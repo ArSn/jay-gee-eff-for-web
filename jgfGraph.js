@@ -2,6 +2,7 @@ const check = require('check-types');
 const _ = require('lodash');
 const { cloneObject } = require('./common');
 const { JGFEdge } = require('./jgfEdge');
+const { Guard } = require('./guard');
 
 /**
  * A single JGF graph instance, always contained in a parent JGFContainer
@@ -83,31 +84,11 @@ class JGFGraph {
     }
 
     /**
-     * Returns the graph type
+     * Set the graph meta data
      */
-    get type() {
-        return this._type;
-    }
-
-    /**
-     * Set the graph type
-     */
-    set type(value) {
-        this._type = value;
-    }
-
-    /**
-     * Returns the graph label
-     */
-    get label() {
-        return this._label;
-    }
-
-    /**
-     * Set the graph label
-     */
-    set label(value) {
-        this._label = value;
+    set metadata(value) {
+        Guard.assertValidMetadataOrNull(value);
+        this._metadata = value;
     }
 
     /**
@@ -115,13 +96,6 @@ class JGFGraph {
      */
     get metadata() {
         return this._metadata;
-    }
-
-    /**
-     * Set the graph meta data
-     */
-    set metadata(value) {
-        this._metadata = value;
     }
 
     /**
@@ -137,7 +111,6 @@ class JGFGraph {
     get edges() {
         return this._edges;
     }
-
 
     /**
      * Returns the graph as JGF Json
