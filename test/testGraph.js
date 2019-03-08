@@ -2,6 +2,7 @@ const { assert } = require('chai');
 const { JGFContainer } = require('../jgfContainer');
 const { JGFGraph } = require('../jgfGraph');
 const { JGFNode } = require('../jgfNode');
+const { JGFEdge } = require('../jgfEdge');
 const simple = require('simple-mock');
 
 describe('Graph', () => {
@@ -123,10 +124,9 @@ describe('Graph', () => {
         });
     });
 
-    xdescribe('#addEdge', () => {
+    describe('#addEdge', () => {
         it('should add a simple edge to a graph', () => {
-            let container = new JGFContainer();
-            let graph = container.graph;
+            let graph = new JGFGraph();
 
             const node1Id = 'lebron-james#2254';
             const node1Label = 'LeBron James';
@@ -136,51 +136,19 @@ describe('Graph', () => {
 
             const playerContractRelation = 'Plays for';
 
-            graph.addNode(node1Id, node1Label);
-            graph.addNode(node2Id, node2Label);
+            graph.addNode(new JGFNode(node1Id, node1Label));
+            graph.addNode(new JGFNode(node2Id, node2Label));
 
             assert.equal(2, graph.nodes.length);
 
-            graph.addEdge(node1Id, node2Id, playerContractRelation);
+            graph.addEdge(new JGFEdge(node1Id, node2Id, playerContractRelation));
 
             assert.equal(1, graph.edges.length);
             assert.equal(playerContractRelation, graph.edges[0].relation);
-        })
+        });
 
-        it('should add optional parameters to the edge before adding it if they are passed', () => {
-            let container = new JGFContainer();
-            let graph = container.graph;
-
-            const node1Id = 'lebron-james#2254';
-            const node1Label = 'LeBron James';
-
-            const node2Id = 'la-lakers#1610616839';
-            const node2Label = 'Los Angeles Lakers';
-
-            graph.addNode(node1Id, node1Label);
-            graph.addNode(node2Id, node2Label);
-
-            assert.equal(2, graph.nodes.length);
-
-            graph.addEdge(node1Id, node2Id, 'Plays for', null, 'metaData');
-
-            assert.equal(1, graph.edges.length);
-            assert.equal('Plays for', graph.edges[0].relation);
-            assert.equal(null, graph.edges[0].label);
-            assert.equal(null, graph.edges[0].directed);
-
-            graph.addEdge(node1Id, node2Id, null, 'awesomeLabel', null, true);
-
-            assert.equal(2, graph.edges.length);
-            assert.equal(null, graph.edges[1].relation);
-            assert.equal('awesomeLabel', graph.edges[1].label);
-            assert.equal(null, graph.edges[1].metadata);
-            assert.equal(true, graph.edges[1].directed);
-        })
-
-        it('should throw error if source or target nodes do not exist and graph is not partial', () => {
-            let container = new JGFContainer();
-            let graph = container.graph;
+        it('should throw error if source or target nodes do not exist', () => {
+            let graph = new JGFGraph();
 
             const node1Id = 'lebron-james#234';
             const node1Label = 'LeBron James';
@@ -188,105 +156,57 @@ describe('Graph', () => {
             const node2Id = 'la-lakers#12345';
             const node2Label = 'Los Angeles Lakers';
 
-            graph.addNode(node1Id, node1Label);
-            graph.addNode(node2Id, node2Label);
+            graph.addNode(new JGFNode(node1Id, node1Label));
+            graph.addNode(new JGFNode(node2Id, node2Label));
 
-            assert.throws(() => graph.addEdge(node1Id + '-nonsense', node2Id, 'Plays for', null, 'metaData'));
-            assert.throws(() => graph.addEdge(node1Id, node2Id + '-nonsense', 'Plays for', null, 'metaData'));
-            assert.throws(() => graph.addEdge(node1Id + '-nonsense', node2Id + '-nonsense', 'Plays for', null, 'metaData'));
-        })
+            assert.throws(() => graph.addEdge(new JGFEdge(node1Id + '-nonsense', node2Id, 'Plays for', null, 'metaData')));
+            assert.throws(() => graph.addEdge(new JGFEdge(node1Id, node2Id + '-nonsense', 'Plays for', null, 'metaData')));
+            assert.throws(() => graph.addEdge(new JGFEdge(node1Id + '-nonsense', node2Id + '-nonsense', 'Plays for', null, 'metaData')));
+        });
 
         it('should throw error if mandatory parameter is missing', () => {
-            let container = new JGFContainer();
-            let graph = container.graph;
+            let graph = new JGFGraph();
 
             assert.throws(() => graph.addEdge());
             assert.throws(() => graph.addEdge('sourceNodeId'));
             assert.throws(() => graph.addEdge(null, 'targetNodeId'));
-        })
-    })
+        });
+    });
 
-    xdescribe('#addEdges', () => {
+    describe('#addEdges', () => {
         it('should not call addEdge if no edges are passed', () => {
-            let container = new JGFContainer();
-            let graph = container.graph;
+            let graph = new JGFGraph();
 
             let fn = simple.mock(graph, 'addEdge').callOriginal();
 
             graph.addEdges([]);
-            graph.addEdges();
 
             assert.equal(fn.callCount, 0);
-        })
+        });
 
-        it('should call addEdge with parameters if edges are passed', () => {
-            let container = new JGFContainer();
-            let graph = container.graph;
+        it('should call addEdge for each edge', () => {
+            let graph = new JGFGraph();
 
             let fn = simple.mock(graph, 'addEdge').callFn(function () {});
 
+            const edgeOne = new JGFEdge('firstSource', 'targetOne', 'targetOne', 'labelOne', { some: 'stuff' }, true);
+            const edgeTwo = new JGFEdge('secondSource', 'targetTwo', 'secondRelation', 'labelTwo', { other: 'things' }, false);
+
             graph.addEdges([
-                {
-                    source: 'firstSource',
-                    target: 'targetOne',
-                    relation: 'firstRelation',
-                    label: 'labelOne',
-                    metadata: 'someMetaData',
-                    directed: true,
-                },
-                {
-                    source: 'secondSource',
-                    target: 'targetTwo',
-                    relation: 'secondRelation',
-                    label: 'labelTwo',
-                    metadata: 'someMoreMetaData',
-                    directed: false,
-                }
+                edgeOne,
+                edgeTwo,
             ]);
 
             assert.equal(fn.callCount, 2);
 
-            assert.equal(fn.calls[0].args[0], 'firstSource');
-            assert.equal(fn.calls[0].args[1], 'targetOne');
-            assert.equal(fn.calls[0].args[2], 'firstRelation');
-            assert.equal(fn.calls[0].args[3], 'labelOne');
-            assert.equal(fn.calls[0].args[4], 'someMetaData');
-            assert.equal(fn.calls[0].args[5], true);
+            assert.deepEqual(fn.calls[0].args[0], edgeOne);
+            assert.deepEqual(fn.calls[1].args[0], edgeTwo);
+        });
+    });
 
-            assert.equal(fn.calls[1].args[0], 'secondSource');
-            assert.equal(fn.calls[1].args[1], 'targetTwo');
-            assert.equal(fn.calls[1].args[2], 'secondRelation');
-            assert.equal(fn.calls[1].args[3], 'labelTwo');
-            assert.equal(fn.calls[1].args[4], 'someMoreMetaData');
-            assert.equal(fn.calls[1].args[5], false);
-
-        })
-
-        it('should add partial graph edges', () => {
-            let container = new JGFContainer();
-            let graph = container.graph;
-            graph.isPartial = true;
-
-            const node1Id = 'lebron-james#2544';
-            const node1Label = 'LeBron James';
-
-            const partialNode2Id = 'la-lakers#1610616839';
-
-            const playerContractRelation = 'Plays for';
-
-            graph.addNode(node1Id, node1Label);
-            graph.addEdge(node1Id, partialNode2Id, playerContractRelation);
-
-            let edges = graph.edges;
-            assert(edges !== null);
-            assert.equal(1, edges.length);
-        })
-    })
-
-    xdescribe('#removeEdges', () => {
+    describe('#removeEdge', () => {
         it('should remove a graph edge', () => {
-            let container = new JGFContainer();
-            let graph = container.graph;
+            let graph = new JGFGraph();
 
             const node1Id = 'lebron-james#2254';
             const node1Label = 'LeBron James';
@@ -296,17 +216,16 @@ describe('Graph', () => {
 
             const playerContractRelation = 'Plays for';
 
-            graph.addNode(node1Id, node1Label);
-            graph.addNode(node2Id, node2Label);
-            graph.addEdge(node1Id, node2Id, playerContractRelation);
+            graph.addNode(new JGFNode(node1Id, node1Label));
+            graph.addNode(new JGFNode(node2Id, node2Label));
+            graph.addEdge(new JGFEdge(node1Id, node2Id, playerContractRelation));
 
-            graph.removeEdges(node1Id, node2Id, playerContractRelation);
+            graph.removeEdge(new JGFEdge(node1Id, node2Id, playerContractRelation));
             assert.equal(0, graph.edges.length, 'After removeEdges there should be zero edges');
-        })
+        });
 
         it('should only remove the edge specified by relation parameter', () => {
-            let container = new JGFContainer();
-            let graph = container.graph;
+            let graph = new JGFGraph();
 
             const node1Id = 'lebron-james#2254';
             const node1Label = 'LeBron James';
@@ -317,25 +236,27 @@ describe('Graph', () => {
             const playerContractRelation = 'Plays for';
             const salaryRelation = 'Gets his salary paid by';
 
-            graph.addNode(node1Id, node1Label);
-            graph.addNode(node2Id, node2Label);
-            graph.addEdge(node1Id, node2Id, playerContractRelation);
-            graph.addEdge(node1Id, node2Id, salaryRelation);
-            assert.equal(2, graph.edges.length);
+            graph.addNode(new JGFNode(node1Id, node1Label));
+            graph.addNode(new JGFNode(node2Id, node2Label));
+            graph.addEdge(new JGFEdge(node1Id, node2Id, playerContractRelation));
+            graph.addEdge(new JGFEdge(node1Id, node2Id, salaryRelation));
+            assert.equal(graph.edges.length, 2);
 
-            graph.removeEdges(node1Id, node2Id, playerContractRelation);
-            assert.equal(1, graph.edges.length, 'One edge should remain after removing one specific relation');
+            graph.removeEdge(new JGFEdge(node1Id, node2Id, playerContractRelation));
+            assert.equal(graph.edges.length, 1, 'One edge should remain after removing one specific relation');
             assert.equal(salaryRelation, graph.edges[0].relation, 'Salary relation should still exist');
 
-            graph.removeEdges(node1Id, node2Id);
-            assert.equal(0, graph.edges.length, 'After removeEdges without relation parameter there should be zero edges');
-        })
-    })
+            graph.removeEdge(new JGFEdge(node1Id, node2Id));
+            assert.equal(graph.edges.length, 1, 'After removeEdges without relation parameter second edge should still be there due to omitting relation');
 
-    xdescribe('#getEdges', () => {
+            graph.removeEdge(new JGFEdge(node1Id, node2Id, salaryRelation));
+            assert.equal(graph.edges.length, 0, 'After removeEdges with relation parameter there should be zero edges');
+        });
+    });
+
+    describe('#getEdgesByNodes', () => {
         it('should lookup edges', () => {
-            let container = new JGFContainer();
-            let graph = container.graph;
+            let graph = new JGFGraph();
 
             const node1Id = 'lebron-james#2254';
             const node1Label = 'LeBron James';
@@ -345,18 +266,19 @@ describe('Graph', () => {
 
             const playerContractRelation = 'Plays for';
 
-            graph.addNode(node1Id, node1Label);
-            graph.addNode(node2Id, node2Label);
-            graph.addEdge(node1Id, node2Id, playerContractRelation);
+            graph.addNode(new JGFNode(node1Id, node1Label));
+            graph.addNode(new JGFNode(node2Id, node2Label));
 
-            let edges = graph.getEdges(node1Id, node2Id, playerContractRelation);
-            assert(edges !== null);
-            assert.equal(1, edges.length);
-        })
+            const expectedEdge = new JGFEdge(node1Id, node2Id, playerContractRelation)
+            graph.addEdge(expectedEdge);
+
+            let edges = graph.getEdgesByNodes(node1Id, node2Id, playerContractRelation);
+            assert.equal(edges.length, 1);
+            assert.deepEqual(edges[0], expectedEdge);
+        });
 
         it('should throw error if source or target node does not exist and graph is not partial', () => {
-            let container = new JGFContainer();
-            let graph = container.graph;
+            let graph = new JGFGraph();
 
             const node1Id = 'lebron-james#2254';
             const node1Label = 'LeBron James';
@@ -366,61 +288,15 @@ describe('Graph', () => {
 
             const playerContractRelation = 'Plays for';
 
-            graph.addNode(node1Id, node1Label);
-            graph.addNode(node2Id, node2Label);
-            graph.addEdge(node1Id, node2Id, playerContractRelation);
+            graph.addNode(new JGFNode(node1Id, node1Label));
+            graph.addNode(new JGFNode(node2Id, node2Label));
+            graph.addEdge(new JGFEdge(node1Id, node2Id, playerContractRelation));
 
-            assert.throws(() => graph.getEdges('lebron-james#2254-nonsense', node2Id, playerContractRelation));
-            assert.throws(() => graph.getEdges(node1Id, 'la-lakers#1610616839-nonsense', playerContractRelation));
-            assert.throws(() => graph.getEdges('blubb', 'bla'));
-        })
-
-        // todo: this test should probably be removed once getting partial edges is supported
-        it('should return edges if graph is partial', () => {
-            let container = new JGFContainer();
-            let graph = container.graph;
-            graph.isPartial = true;
-
-            const node1Id = 'lebron-james#2254';
-            const node1Label = 'LeBron James';
-
-            const node2Id = 'la-lakers#1610616839';
-            const node2Label = 'Los Angeles Lakers';
-
-            const playerContractRelation = 'Plays for';
-
-            graph.addNode(node1Id, node1Label);
-            graph.addNode(node2Id, node2Label);
-            graph.addEdge(node1Id, node2Id, playerContractRelation);
-
-            let edges = graph.getEdges(node1Id, node2Id, playerContractRelation);
-            assert(edges !== null);
-            assert.equal(1, edges.length);
-        })
-
-        xit('should return partial edges if graph is partial', () => {
-            let container = new JGFContainer();
-            let graph = container.graph;
-            graph.isPartial = true;
-
-            const node1Id = 'lebron-james#2254';
-            const node1Label = 'LeBron James';
-
-            const node2Id = 'la-lakers#1610616839';
-            const node2Label = 'Los Angeles Lakers';
-
-            const playerContractRelation = 'Plays for';
-
-            graph.addNode(node1Id, node1Label);
-            graph.addNode(node2Id, node2Label);
-            graph.addEdge(node1Id, node2Id, playerContractRelation);
-
-            // todo: this does not yet return partial edges if there are any, functionality missing
-            let edges = graph.getEdges('lebron-james#2254-nonsense', node2Id, playerContractRelation);
-            assert(edges !== null);
-            assert.equal(1, edges.length);
-        })
-    })
+            assert.throws(() => graph.getEdgesByNodes('lebron-james#2254-nonsense', node2Id, playerContractRelation));
+            assert.throws(() => graph.getEdgesByNodes(node1Id, 'la-lakers#1610616839-nonsense', playerContractRelation));
+            assert.throws(() => graph.getEdgesByNodes('blubb', 'bla'));
+        });
+    });
 
     xdescribe('#loadFromJson', () => {
         it('should load graph from json', () => {

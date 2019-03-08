@@ -1,7 +1,7 @@
 const check = require('check-types');
 const _ = require('lodash');
 const { cloneObject } = require('./common');
-const { JGFNode } = require('./jgfNode');
+const { JGFEdge } = require('./jgfEdge');
 
 /**
  * A single JGF graph instance, always contained in a parent JGFContainer
@@ -56,10 +56,11 @@ class JGFGraph {
      * @private
      */
     _findNodeById(nodeId) {
-        let foundNode = _.find(this._nodes, (existingNode) => { return existingNode.id === nodeId } );
+        let foundNode = _.find(this._nodes, (existingNode) => existingNode.id === nodeId);
         if (!foundNode) {
             throw new Error(`A node does not exist with id = ${nodeId}`);
         }
+
         return foundNode;
     }
 
@@ -76,8 +77,9 @@ class JGFGraph {
      * @private
      */
     _nodeExistsById(nodeId) {
-        let foundNode = _.find(this._nodes, (existingNode) => { return existingNode.id === nodeId } );
-        return !!foundNode;
+        let foundNode = _.find(this._nodes, (existingNode) => existingNode.id === nodeId);
+
+        return Boolean(foundNode);
     }
 
     /**
@@ -133,7 +135,7 @@ class JGFGraph {
      * Returns all edges
      */
     get edges() {
-        return cloneObject(this._edges);
+        return this._edges;
     }
 
 
@@ -146,7 +148,7 @@ class JGFGraph {
             label: this._label,
             directed: this._directed,
             nodes: this._nodes,
-            edges: this._getJsonEdges(),
+            edges: this.edges,
         };
 
         let metadata = this._getJsonMetadata();
@@ -164,15 +166,6 @@ class JGFGraph {
         }
 
         return metadata;
-    }
-
-    _getJsonEdges() {
-        let edges = [];
-        if (check.assigned(this._edges) && this._edges.length > 0) {
-            edges = this._edges;
-        }
-
-        return edges;
     }
 
     /**
@@ -207,7 +200,7 @@ class JGFGraph {
             throw new Error(`A node does not exist with id = ${node.id}`);
         }
 
-        _.remove(this._nodes, (existingNode) => { return existingNode.id === node.id });
+        _.remove(this._nodes, (existingNode) => existingNode.id === node.id);
     }
 
     /**
@@ -219,102 +212,54 @@ class JGFGraph {
     }
 
     /**
-     * Adds an edge between a source node and a target node
-     * @param {*} source Source node id
-     * @param {*} target Target node id
-     * @param {*} relation Edge relation (AKA 'relationship type')
-     * @param {*} label Edge label (the display name of the edge)
-     * @param {*} metadata Custom edge meta data
-     * @param {*} directed true for a directed edge, false for undirected
+     * Adds an edge between a source node and a target node.
+     * @param {JGFEdge} edge Source node id
      */
-    addEdge(source, target, relation = null, label = null, metadata = null, directed = null) {
-        JGFGraph._guardAgainstEmptyNodeParams(source, target);
-
-        let edge = {
-            source,
-            target,
-        };
-        if (check.assigned(relation)) {
-            edge.relation = relation;
-        }
-        if (check.assigned(label)) {
-            edge.label = label;
-        }
-        if (check.assigned(metadata)) {
-            edge.metadata = metadata;
-        }
-        if (check.assigned(directed)) {
-            edge.directed = directed;
-        }
-
+    addEdge(edge) {
+        this._guardAgainstNonExistentNodes(edge.source, edge.target);
         this._edges.push(edge);
     }
 
     _guardAgainstNonExistentNodes(source, target) {
-        if (!(source in this._nodes)) {
+        if (!this._nodeExistsById(source)) {
             throw new Error(`addEdge failed: source node isn't found in nodes. source = ${source}`);
         }
 
-        if (!(target in this._nodes)) {
+        if (!this._nodeExistsById(target)) {
             throw new Error(`addEdge failed: target node isn't found in nodes. target = ${target}`);
-        }
-    }
-
-    static _guardAgainstEmptyNodeParams(source, target) {
-        if (!source) {
-            throw new Error('addEdge failed: source parameter is not valid');
-        }
-
-        if (!target) {
-            throw new Error('addEdge failed: target parameter is not valid');
         }
     }
 
     /**
      * Adds multiple edges
-     * @param {*} edges A collection of JGF edge obejcts
+     * @param {JGFEdge[]} edges A collection of JGF edge objects.
      */
     addEdges(edges) {
-        if (edges) {
-            for (let edge of edges) {
-                this.addEdge(edge.source, edge.target, edge.relation, edge.label, edge.metadata, edge.directed);
-            }
+        for (let edge of edges) {
+            this.addEdge(edge);
         }
     }
 
     /**
-     * Checks whether the passed edge is equal to an edge with all other three passed params.
-     * @param {*} edge
-     * @param {*} source Source node id
-     * @param {*} target Target node id
-     * @param {*} relation Specific edge relation type to remove. If empty then all edges will be removed, regardless of their relation
+     * Removes existing graph edge.
+     * @param {JGFEdge} edge Edge to be removed.
      */
-    static _isEdgeEqual(edge, source, target, relation) {
-        return edge.source === source &&
-            edge.target === target &&
-            (relation === '' || edge.relation === relation);
+    removeEdge(edge) {
+        _.remove(this._edges, (existingEdge) => existingEdge.isEqualTo(edge, true));
     }
 
     /**
-     * Removes existing graph edges
-     * @param {*} source Source node id
-     * @param {*} target Target node id
-     * @param {*} relation Specific edge relation type to remove. If empty then all edges will be removed, regardless of their relation
+     * Get edges between source node and target node, with an optional edge relation.
+     * @param {string} source Source node ID.
+     * @param {string} target Target node ID.
+     * @param {string,null} relation
      */
-    removeEdges(source, target, relation = '') {
-        _.remove(this._edges, (edge) => JGFGraph._isEdgeEqual(edge, source, target, relation));
-    }
+    getEdgesByNodes(source, target, relation = null) {
+        this._guardAgainstNonExistentNodes(source, target);
 
-    /**
-     * Get edges between source node and target node, with an optional edge relation
-     * @param {*} source
-     * @param {*} target
-     * @param {*} relation
-     */
-    getEdges(source, target, relation = '') {
-        let edges = _.filter(this._edges, (edge) => JGFGraph._isEdgeEqual(edge, source, target, relation));
+        let edge = new JGFEdge(source, target, relation);
 
-        return cloneObject(edges);
+        return _.filter(this._edges, (existingEdge) => existingEdge.isEqualTo(edge, check.assigned(relation)));
     }
 
     get graphDimensions() {
