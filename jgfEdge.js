@@ -62,11 +62,12 @@ class JGFEdge {
     /**
      * Determines whether this edge is equal to the passed edge.
      * @param {JGFEdge} edge The edge to compare to.
+     * @param {boolean} compareRelation Whether or not to compare the relation as well.
      */
-    isEqualTo(edge) {
+    isEqualTo(edge, compareRelation = false) {
         return edge.source === this.source
             && edge.target === this.target
-            && edge.relation === this.relation;
+            && (compareRelation === false || edge.relation === this.relation);
     }
 }
 
