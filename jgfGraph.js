@@ -1,6 +1,7 @@
 const check = require('check-types');
 const _ = require('lodash');
 const { cloneObject } = require('./common');
+const { JGFNode } = require('./jgfNode');
 
 /**
  * A single JGF graph instance, always contained in a parent JGFContainer
@@ -15,14 +16,13 @@ class JGFGraph {
      * @param {*} metadata about the graph
      */
     constructor(type = '', label = '', directed = true, metadata = null) {
-        this._nodes = {};
+        this._nodes = [];
         this._edges = [];
 
         this._type = type;
         this._label = label;
         this._directed = directed;
         this._metadata = metadata;
-        this._isPartial = false;
     }
 
 
@@ -37,24 +37,47 @@ class JGFGraph {
         this._directed = graphJson.directed || true;
         this._metadata = graphJson.metadata;
 
-        this._nodes = {};
+        this._nodes = [];
         this._edges = [];
         this.addNodes(graphJson.nodes);
         this.addEdges(graphJson.edges);
     }
 
     /**
-     * Returns the isPartial flag
+     * @param {JGFNode} node Node to be found.
+     * @private
      */
-    get isPartial() {
-        return this._isPartial;
+    _findNode(node) {
+        return this._findNodeById(node.id);
     }
 
     /**
-     * Set the _isPartial flag
+     * @param {string} nodeId Node to be found.
+     * @private
      */
-    set isPartial(value) {
-        this._isPartial = value;
+    _findNodeById(nodeId) {
+        let foundNode = _.find(this._nodes, (existingNode) => { return existingNode.id === nodeId } );
+        if (!foundNode) {
+            throw new Error(`A node does not exist with id = ${nodeId}`);
+        }
+        return foundNode;
+    }
+
+    /**
+     * @param {JGFNode} node Node to be found.
+     * @private
+     */
+    _nodeExists(node) {
+        return this._nodeExistsById(node.id);
+    }
+
+    /**
+     * @param {string} nodeId Node to be found.
+     * @private
+     */
+    _nodeExistsById(nodeId) {
+        let foundNode = _.find(this._nodes, (existingNode) => { return existingNode.id === nodeId } );
+        return !!foundNode;
     }
 
     /**
@@ -103,7 +126,7 @@ class JGFGraph {
      * Returns all nodes
      */
     get nodes() {
-        return cloneObject(Object.values(this._nodes));
+        return this._nodes;
     }
 
     /**
@@ -122,7 +145,7 @@ class JGFGraph {
             type: this._type,
             label: this._label,
             directed: this._directed,
-            nodes: this._getJsonNodes(),
+            nodes: this._nodes,
             edges: this._getJsonEdges(),
         };
 
@@ -138,22 +161,9 @@ class JGFGraph {
         let metadata = null;
         if (check.assigned(this._metadata)) {
             metadata = this._metadata;
-
-            if (this.isPartial) {
-                metadata.isPartial = true;
-            }
         }
 
         return metadata;
-    }
-
-    _getJsonNodes() {
-        let nodes = [];
-        if (check.assigned(this._nodes) && Object.keys(this._nodes).length > 0) {
-            nodes = Object.values(this._nodes);
-        }
-
-        return nodes;
     }
 
     _getJsonEdges() {
@@ -167,84 +177,45 @@ class JGFGraph {
 
     /**
      * Adds a new node
-     * @param {*} id Node id
-     * @param {*} label Node label
-     * @param {*} metadata about the node
+     * @param {JGFNode} node Node to be added.
      */
-    addNode(id, label, metadata = null) {
-        if (id in this._nodes) {
-            throw new Error(`A node already exists with id = ${id}`);
+    addNode(node) {
+        if (this._nodeExists(node)) {
+            throw new Error(`A node already exists with id = ${node.id}`);
         }
 
-        let newNode = {
-            id,
-            label,
-        };
-
-        if (check.assigned(metadata)) {
-            newNode.metadata = metadata;
-        }
-
-        this._nodes[newNode.id] = newNode;
+        this._nodes.push(node);
     }
 
 
     /**
      * Adds multiple nodes
-     * @param {*} nodes A collection of JGF node objects
+     * @param {JGFNode[]} nodes A collection of JGF node objects.
      */
     addNodes(nodes) {
-        for (let { id, label, metadata } of nodes) {
-            this.addNode(id, label, metadata);
+        for (let node of nodes) {
+            this.addNode(node);
         }
     }
-
-
-    /**
-     * Updates an existing node
-     * @param {*} nodeId Node id
-     * @param {*} label Updated node label
-     * @param {*} metadata Updated node meta data
-     */
-    updateNode(nodeId, label, metadata = null) {
-        if (!(nodeId in this._nodes)) {
-            throw new Error(`Can't update node. A node doesn't exist with id = ${nodeId}`);
-        }
-
-        let node = this._nodes[nodeId];
-
-        if (check.assigned(label)) {
-            node.label = label;
-        }
-
-        if (check.assigned(metadata)) {
-            node.metadata = metadata;
-        }
-    }
-
 
     /**
      * Removes an existing graph node
-     * @param {*} nodeId Node unique id
+     * @param {JGFNode} node Node to be removed.
      */
-    removeNode(nodeId) {
-        if (!(nodeId in this._nodes)) {
-            throw new Error(`A node doesn't exist with id = ${nodeId}`);
+    removeNode(node) {
+        if (!this._nodeExists(node)) {
+            throw new Error(`A node does not exist with id = ${node.id}`);
         }
 
-        Reflect.deleteProperty(this._nodes, nodeId);
+        _.remove(this._nodes, (existingNode) => { return existingNode.id === node.id });
     }
 
     /**
-     * Lookup a node by a node id
-     * @param {*} nodeId Unique node id
+     * Get a node by a node id.
+     * @param {string} nodeId Unique node id
      */
-    getNode(nodeId) {
-        if (!(nodeId in this._nodes)) {
-            throw new Error(`A node doesn't exist with id = ${nodeId}`);
-        }
-
-        return cloneObject(this._nodes[nodeId]);
+    getNodeById(nodeId) {
+        return this._findNodeById(nodeId);
     }
 
     /**
@@ -258,7 +229,6 @@ class JGFGraph {
      */
     addEdge(source, target, relation = null, label = null, metadata = null, directed = null) {
         JGFGraph._guardAgainstEmptyNodeParams(source, target);
-        this._guardNonPartialGraphsAgainstNonExistentNodes(source, target);
 
         let edge = {
             source,
@@ -278,12 +248,6 @@ class JGFGraph {
         }
 
         this._edges.push(edge);
-    }
-
-    _guardNonPartialGraphsAgainstNonExistentNodes(source, target) {
-        if (!this.isPartial) {
-            this._guardAgainstNonExistentNodes(source, target);
-        }
     }
 
     _guardAgainstNonExistentNodes(source, target) {
@@ -348,8 +312,6 @@ class JGFGraph {
      * @param {*} relation
      */
     getEdges(source, target, relation = '') {
-        this._guardNonPartialGraphsAgainstNonExistentNodes(source, target);
-
         let edges = _.filter(this._edges, (edge) => JGFGraph._isEdgeEqual(edge, source, target, relation));
 
         return cloneObject(edges);

@@ -1,7 +1,7 @@
 const { assert } = require('chai');
 const { JGFContainer } = require('../jgfContainer');
 
-describe('Container', () => {
+xdescribe('Container', () => {
     describe('#createContainerSingleGraph', () => {
         it('should create a valid empty graph container, in Single-Graph mode', () => {
             let container = new JGFContainer();
