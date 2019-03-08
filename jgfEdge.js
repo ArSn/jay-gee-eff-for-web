@@ -58,6 +58,16 @@ class JGFEdge {
     get directed() {
         return this._directed;
     }
+
+    /**
+     * Determines whether this edge is equal to the passed edge.
+     * @param {JGFEdge} edge The edge to compare to.
+     */
+    isEqualTo(edge) {
+        return edge.source === this.source
+            && edge.target === this.target
+            && edge.relation === this.relation;
+    }
 }
 
 module.exports = {
