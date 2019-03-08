@@ -448,8 +448,7 @@ describe('Graph', () => {
 
     describe('#graphDimensions', () => {
         it('should return zero dimensions for an empty graph', () => {
-            let container = new JGFContainer();
-            let graph = container.graph;
+            let graph = new JGFGraph();
 
             let dimensions = graph.graphDimensions;
             assert.equal(0, dimensions.nodes);
@@ -461,9 +460,9 @@ describe('Graph', () => {
             let container = new JGFContainer();
             let graph = container.graph;
 
-            graph.addNode('node1', 'nodeTypeA');
-            graph.addNode('node2', 'nodeTypeB');
-            graph.addEdge('node1', 'node2', 'edgeTypeC');
+            graph.addNode(new JGFNode('node1', 'nodeTypeA'));
+            graph.addNode(new JGFNode('node2', 'nodeTypeB'));
+            graph.addEdge(new JGFEdge('node1', 'node2', 'edgeTypeC'));
 
             let dimensions = graph.graphDimensions;
             assert.equal(2, dimensions.nodes);

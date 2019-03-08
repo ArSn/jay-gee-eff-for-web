@@ -236,15 +236,10 @@ class JGFGraph {
     }
 
     get graphDimensions() {
-        let dimensions = {
-            nodes: 0,
-            edges: 0,
+        return {
+            nodes: this._nodes.length,
+            edges: this._edges.length,
         };
-
-        dimensions.nodes = Object.keys(this._nodes).length;
-        dimensions.edges = this._edges.length;
-
-        return dimensions;
     }
 }
 
