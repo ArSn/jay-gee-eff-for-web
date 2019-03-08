@@ -45,14 +45,6 @@ class JGFGraph {
     }
 
     /**
-     * @param {JGFNode} node Node to be found.
-     * @private
-     */
-    _findNode(node) {
-        return this._findNodeById(node.id);
-    }
-
-    /**
      * @param {string} nodeId Node to be found.
      * @private
      */
