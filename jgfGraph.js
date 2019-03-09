@@ -11,10 +11,10 @@ class JgfGraph {
 
     /**
      * Constructor
-     * @param {*} type graph classification
-     * @param {*} label a text display for the graph
-     * @param {*} directed true for a directed graph, false for an undirected graph
-     * @param {*} metadata about the graph
+     * @param {string} type graph classification
+     * @param {string} label a text display for the graph
+     * @param {boolean} directed true for a directed graph, false for an undirected graph
+     * @param {object,null} metadata about the graph
      */
     constructor(type = '', label = '', directed = true, metadata = null) {
         this._nodes = [];

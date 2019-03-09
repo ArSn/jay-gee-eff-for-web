@@ -23,15 +23,11 @@ npm install jay-gee-eff-for-web
 ## Example code
 
 ```javascript
-const { JGFContainer } = require('../index');
+const { JgfNode, JgfEdge, JgfGraph } = require('../index');
 
 (() => {
-
-    console.log('Building the NBA JGF Graph...');
-    let container = new JGFContainer();
-    let graph = container.graph;
-    graph.type = 'sports';
-    graph.label = 'NBA Demo Graph';
+    console.log('Building the NBA Jgf Graph...');
+    let graph = new JgfGraph('sports', 'NBA Demo Graph');
 
     const node1Id = 'lebron-james#2544';
     const node1Label = 'LeBron James';
@@ -48,24 +44,25 @@ const { JGFContainer } = require('../index');
     const playerContractRelation = 'Plays for';
 
     console.log('Adding two nodes...');
-    graph.addNode(node1Id, node1Label, metadata1);
-    graph.addNode(node2Id, node2Label, metadata2);
+    graph.addNode(new JgfNode(node1Id, node1Label, metadata1));
+    graph.addNode(new JgfNode(node2Id, node2Label, metadata2));
 
     console.log('Adding an edge...');
-    graph.addEdge(node1Id, node2Id, playerContractRelation);
+    graph.addEdge(new JgfEdge(node1Id, node2Id, playerContractRelation));
 
     console.log('Graph nodes:');
-    for (let node of container.graph.nodes) {
+    for (let node of graph.nodes) {
         console.log(`\t${node.label} {${node.metadata.type}}`);
     }
 
     console.log('Graph edges:');
-    for (let edge of container.graph.edges) {
+    for (let edge of graph.edges) {
         console.log(`\t${edge.source} (->${edge.relation}->) ${edge.target}`);
     }
 
-    console.log('Full JSON representation:');
-    console.log(JSON.stringify(graph.json));
+    // todo: add this back in once json decorator is ready
+    // console.log('Full JSON representation:');
+    // console.log(JSON.stringify(graph.json));
 
     console.log('-- DONE --');
 })();
