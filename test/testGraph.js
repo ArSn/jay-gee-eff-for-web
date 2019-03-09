@@ -266,7 +266,7 @@ describe('Graph', () => {
             graph.addNode(new JgfNode(node1Id, node1Label));
             graph.addNode(new JgfNode(node2Id, node2Label));
 
-            const expectedEdge = new JgfEdge(node1Id, node2Id, playerContractRelation)
+            const expectedEdge = new JgfEdge(node1Id, node2Id, playerContractRelation);
             graph.addEdge(expectedEdge);
 
             let edges = graph.getEdgesByNodes(node1Id, node2Id, playerContractRelation);

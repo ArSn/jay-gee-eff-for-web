@@ -18,7 +18,7 @@ describe('Node', () => {
                 assert.throws(() => new JgfNode('id', 'label', invalidMetaData));
             });
         });
-    })
+    });
 
     describe('#mutators', () => {
         it('should set and get metadata', () => {
@@ -34,5 +34,5 @@ describe('Node', () => {
                 assert.throws(() => node.metadata = invalidMetaData);
             });
         });
-    })
+    });
 });

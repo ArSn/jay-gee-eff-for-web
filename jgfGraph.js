@@ -26,7 +26,6 @@ class JgfGraph {
         this._metadata = metadata;
     }
 
-
     /**
      * Loads the graph from a Jgf JSON object
      * @param {*} graphJson Jgf JSON object
