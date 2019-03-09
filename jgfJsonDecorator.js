@@ -21,9 +21,9 @@ class JgfJsonDecorator {
     }
 
     static toJson(graph) {
-        JgfJsonDecorator._guardAgainstInvalidGraphObject(graph);
+        this._guardAgainstInvalidGraphObject(graph);
 
-        let normalizedGraph = JgfJsonDecorator._normalizeToMultiGraph(graph);
+        let normalizedGraph = this._normalizeToMultiGraph(graph);
         let allGraphsJson = [];
 
         _.each(normalizedGraph.graphs, (singleGraph) => {
@@ -37,29 +37,44 @@ class JgfJsonDecorator {
                 edges: [],
             };
 
-            _.each(singleGraph.nodes, (node) => {
-                singleGraphJson.nodes.push({
-                    id: node.id,
-                    label: node.label,
-                    metadata: node.metadata,
-                });
-            });
-
-            _.each(singleGraph.edges, (edge) => {
-                singleGraphJson.edges.push({
-                    source: edge.source,
-                    target: edge.target,
-                    relation: edge.relation,
-                    label: edge.label,
-                    metadata: edge.metadata,
-                    directed: edge.directed,
-                });
-            });
+            this._nodesToJson(singleGraph, singleGraphJson);
+            this._edgesToJson(singleGraph, singleGraphJson);
 
             allGraphsJson.push(singleGraphJson);
         });
 
         return allGraphsJson;
+    }
+
+    /**
+     * @param {JgfGraph} graph
+     * @param {object} json
+     */
+    static _edgesToJson(graph, json) {
+        _.each(graph.edges, (edge) => {
+            json.edges.push({
+                source: edge.source,
+                target: edge.target,
+                relation: edge.relation,
+                label: edge.label,
+                metadata: edge.metadata,
+                directed: edge.directed,
+            });
+        });
+    }
+
+    /**
+     * @param {JgfGraph} graph
+     * @param {object} json
+     */
+    static _nodesToJson(graph, json) {
+        _.each(graph.nodes, (node) => {
+            json.nodes.push({
+                id: node.id,
+                label: node.label,
+                metadata: node.metadata,
+            });
+        });
     }
 
     static _normalizeToMultiGraph(graph) {
