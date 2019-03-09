@@ -1,6 +1,5 @@
 const check = require('check-types');
 const _ = require('lodash');
-const { cloneObject } = require('./common');
 const { JgfEdge } = require('./jgfEdge');
 const { Guard } = require('./guard');
 
@@ -24,23 +23,6 @@ class JgfGraph {
         this.label = label;
         this.directed = directed;
         this._metadata = metadata;
-    }
-
-    /**
-     * Loads the graph from a Jgf JSON object
-     * @param {*} graphJson Jgf JSON object
-     */
-    loadFromJSON(graphJson) {
-        this.type = graphJson.type;
-        this.label = graphJson.label;
-        // todo: this makes the graph always directed (even if false is passed), I doubt that this was the intention here
-        this.directed = graphJson.directed || true;
-        this._metadata = graphJson.metadata;
-
-        this._nodes = [];
-        this._edges = [];
-        this.addNodes(graphJson.nodes);
-        this.addEdges(graphJson.edges);
     }
 
     /**
@@ -101,35 +83,6 @@ class JgfGraph {
      */
     get edges() {
         return this._edges;
-    }
-
-    /**
-     * Returns the graph as Jgf Json
-     */
-    get json() {
-        let json = {
-            type: this.type,
-            label: this.label,
-            directed: this.directed,
-            nodes: this._nodes,
-            edges: this.edges,
-        };
-
-        let metadata = this._getJsonMetadata();
-        if (metadata) {
-            json.metadata = metadata;
-        }
-
-        return cloneObject(json);
-    }
-
-    _getJsonMetadata() {
-        let metadata = null;
-        if (check.assigned(this._metadata)) {
-            metadata = this._metadata;
-        }
-
-        return metadata;
     }
 
     /**

@@ -35,7 +35,6 @@
   },
   "dependencies": {
     "check-types": "^7.4.0",
-    "fast-clone": "^1.5.3",
     "lodash": "^4.17.11"
   }
 }

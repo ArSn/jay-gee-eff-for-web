@@ -352,11 +352,6 @@ execa@^1.0.0:
     signal-exit "^3.0.0"
     strip-eof "^1.0.0"
 
-fast-clone@^1.5.3:
-  version "1.5.3"
-  resolved "https://registry.yarnpkg.com/fast-clone/-/fast-clone-1.5.3.tgz#2faa7a825054e9fc8be5024fb09a266ed2cd9fe7"
-  integrity sha512-o+FDnlwswtBJqisjSmHdyMVcPZCZYTX7sBHTBLYQKYSiwp8QlFfU/ucSsnbDzdMTrRwzaIXuD+EXIFWIvga1uQ==
-
 find-cache-dir@^2.0.0:
   version "2.0.0"
   resolved "https://registry.yarnpkg.com/find-cache-dir/-/find-cache-dir-2.0.0.tgz#4c1faed59f45184530fb9d7fa123a4d04a98472d"

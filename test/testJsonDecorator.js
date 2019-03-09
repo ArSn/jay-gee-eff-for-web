@@ -45,5 +45,9 @@ describe('JsonDecorator', () => {
                     }]
             }]);
         });
+
+        xit('should transform multigraph to json', () => {
+
+        });
     });
 });

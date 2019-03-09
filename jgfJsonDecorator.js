@@ -4,7 +4,9 @@ const { JgfGraph } = require('./jgfGraph');
 const { JgfMultiGraph } = require('./jgfMultiGraph');
 
 /**
- * Jgf multiple graphs.
+ * Transforms graphs or multigraphs to json or vice versa.
+ *
+ * Note that this is just called decorator for semantic reasons and does not follow the GoF decorator design pattern.
  */
 class JgfJsonDecorator {
 
