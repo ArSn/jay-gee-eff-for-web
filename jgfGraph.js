@@ -20,9 +20,9 @@ class JgfGraph {
         this._nodes = [];
         this._edges = [];
 
-        this._type = type;
-        this._label = label;
-        this._directed = directed;
+        this.type = type;
+        this.label = label;
+        this.directed = directed;
         this._metadata = metadata;
     }
 
@@ -31,10 +31,10 @@ class JgfGraph {
      * @param {*} graphJson Jgf JSON object
      */
     loadFromJSON(graphJson) {
-        this._type = graphJson.type;
-        this._label = graphJson.label;
+        this.type = graphJson.type;
+        this.label = graphJson.label;
         // todo: this makes the graph always directed (even if false is passed), I doubt that this was the intention here
-        this._directed = graphJson.directed || true;
+        this.directed = graphJson.directed || true;
         this._metadata = graphJson.metadata;
 
         this._nodes = [];
@@ -108,9 +108,9 @@ class JgfGraph {
      */
     get json() {
         let json = {
-            type: this._type,
-            label: this._label,
-            directed: this._directed,
+            type: this.type,
+            label: this.label,
+            directed: this.directed,
             nodes: this._nodes,
             edges: this.edges,
         };

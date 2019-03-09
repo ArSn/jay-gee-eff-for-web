@@ -351,7 +351,7 @@ describe('Graph', () => {
                 edges: [],
             });
 
-            assert.isTrue(graph._directed);
+            assert.isTrue(graph.directed);
 
             graph = new JgfGraph();
             graph.loadFromJSON({
@@ -360,7 +360,7 @@ describe('Graph', () => {
                 edges: [],
             });
 
-            assert.isTrue(graph._directed);
+            assert.isTrue(graph.directed);
 
             graph = new JgfGraph();
             graph.loadFromJSON({
@@ -368,7 +368,7 @@ describe('Graph', () => {
                 edges: [],
             });
 
-            assert.isTrue(graph._directed);
+            assert.isTrue(graph.directed);
         })
     })
 
