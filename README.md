@@ -23,7 +23,7 @@ npm install jay-gee-eff-for-web
 ## Example code
 
 ```javascript
-const { JgfNode, JgfEdge, JgfGraph } = require('../index');
+const { JgfNode, JgfEdge, JgfGraph, JgfJsonDecorator } = require('../index');
 
 (() => {
     console.log('Building the NBA Jgf Graph...');
@@ -60,9 +60,8 @@ const { JgfNode, JgfEdge, JgfGraph } = require('../index');
         console.log(`\t${edge.source} (->${edge.relation}->) ${edge.target}`);
     }
 
-    // todo: add this back in once json decorator is ready
-    // console.log('Full JSON representation:');
-    // console.log(JSON.stringify(graph.json));
+    console.log('Full JSON representation:');
+    console.log(JSON.stringify(JgfJsonDecorator.toJson(graph)));
 
     console.log('-- DONE --');
 })();
