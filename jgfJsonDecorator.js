@@ -1,4 +1,4 @@
-const _ = require('lodash');
+const _ = require('deepdash')(require('lodash'));
 const check = require('check-types');
 const { JgfGraph } = require('./jgfGraph');
 const { JgfMultiGraph } = require('./jgfMultiGraph');
@@ -20,6 +20,8 @@ class JgfJsonDecorator {
         }
     }
 
+    // todo: add doc block
+    // todo: check if just retunrning a multigraph for a single one makes sense according to spec
     static toJson(graph) {
         this._guardAgainstInvalidGraphObject(graph);
 
@@ -43,7 +45,11 @@ class JgfJsonDecorator {
             allGraphsJson.push(singleGraphJson);
         });
 
-        return allGraphsJson;
+        return this._removeNullValues(allGraphsJson);
+    }
+
+    static _removeNullValues(json) {
+        return _.filterDeep(json, (value) => value !== null);
     }
 
     /**
