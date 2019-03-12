@@ -25,8 +25,12 @@ class JgfJsonDecorator {
     static toJson(graph) {
         this._guardAgainstInvalidGraphObject(graph);
 
+        const isSingleGraph = check.instance(graph, JgfGraph);
+
         let normalizedGraph = this._normalizeToMultiGraph(graph);
-        let allGraphsJson = [];
+        let allGraphsJson = {
+            graphs: [],
+        };
 
         _.each(normalizedGraph.graphs, (singleGraph) => {
 
@@ -42,8 +46,12 @@ class JgfJsonDecorator {
             this._nodesToJson(singleGraph, singleGraphJson);
             this._edgesToJson(singleGraph, singleGraphJson);
 
-            allGraphsJson.push(singleGraphJson);
+            allGraphsJson.graphs.push(singleGraphJson);
         });
+
+        if (isSingleGraph) {
+            allGraphsJson = allGraphsJson.graphs[0];
+        }
 
         return this._removeNullValues(allGraphsJson);
     }

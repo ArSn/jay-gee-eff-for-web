@@ -24,7 +24,7 @@ describe('JsonDecorator', () => {
 
             graph.addEdge(new JgfEdge('firstNodeId', 'secondNodeId', 'is-test-edge', 'edge-label', { meta: 'edge-metadata' }, true));
 
-            assert.deepEqual(JgfJsonDecorator.toJson(graph), [{
+            assert.deepEqual(JgfJsonDecorator.toJson(graph), {
                 type: 'someType',
                 label: 'someLabel',
                 directed: true,
@@ -43,7 +43,7 @@ describe('JsonDecorator', () => {
                         metadata: { meta: 'edge-metadata' },
                         directed: true,
                     }]
-            }]);
+            });
         });
 
         xit('should transform multigraph to json', () => {
