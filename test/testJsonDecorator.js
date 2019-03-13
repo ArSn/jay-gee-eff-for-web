@@ -25,24 +25,26 @@ describe('JsonDecorator', () => {
             graph.addEdge(new JgfEdge('firstNodeId', 'secondNodeId', 'is-test-edge', 'edge-label', { meta: 'edge-metadata' }, true));
 
             assert.deepEqual(JgfJsonDecorator.toJson(graph), {
-                type: 'someType',
-                label: 'someLabel',
-                directed: true,
-                metadata: { bla: 'some-meta-data' },
-                nodes:
-                    [
-                        {id: 'firstNodeId', label: 'blubb-label', metadata: { bla: 'whoopp' }},
-                        {id: 'secondNodeId', label: 'bla-label', metadata: { bli: 'whaaat' }},
-                    ],
-                edges:
-                    [{
-                        source: 'firstNodeId',
-                        target: 'secondNodeId',
-                        relation: 'is-test-edge',
-                        label: 'edge-label',
-                        metadata: { meta: 'edge-metadata' },
-                        directed: true,
-                    }]
+                graph: {
+                    type: 'someType',
+                    label: 'someLabel',
+                    directed: true,
+                    metadata: { bla: 'some-meta-data' },
+                    nodes:
+                        [
+                            {id: 'firstNodeId', label: 'blubb-label', metadata: { bla: 'whoopp' }},
+                            {id: 'secondNodeId', label: 'bla-label', metadata: { bli: 'whaaat' }},
+                        ],
+                    edges:
+                        [{
+                            source: 'firstNodeId',
+                            target: 'secondNodeId',
+                            relation: 'is-test-edge',
+                            label: 'edge-label',
+                            metadata: {meta: 'edge-metadata'},
+                            directed: true,
+                        }]
+                }
             });
         });
 

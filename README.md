@@ -85,33 +85,35 @@ Full JSON representation:
 ### The JSON output from example above
 ```json
 {
-  "type": "sports",
-  "label": "NBA Demo Graph",
-  "directed": true,
-  "nodes": [
-    {
-      "id": "lebron-james#2544",
-      "label": "LeBron James",
-      "metadata": {
-        "type": "NBA Player"
+  "graph": {
+    "type": "sports",
+    "label": "NBA Demo Graph",
+    "directed": true,
+    "nodes": [
+      {
+        "id": "lebron-james#2544",
+        "label": "LeBron James",
+        "metadata": {
+          "type": "NBA Player"
+        }
+      },
+      {
+        "id": "la-lakers#1610616839",
+        "label": "Los Angeles Lakers",
+        "metadata": {
+          "type": "NBA Team"
+        }
       }
-    },
-    {
-      "id": "la-lakers#1610616839",
-      "label": "Los Angeles Lakers",
-      "metadata": {
-        "type": "NBA Team"
+    ],
+    "edges": [
+      {
+        "source": "lebron-james#2544",
+        "target": "la-lakers#1610616839",
+        "relation": "Plays for",
+        "directed": true
       }
-    }
-  ],
-  "edges": [
-    {
-      "source": "lebron-james#2544",
-      "target": "la-lakers#1610616839",
-      "relation": "Plays for",
-      "directed": true
-    }
-  ]
+    ]
+  }
 }
 ```
 

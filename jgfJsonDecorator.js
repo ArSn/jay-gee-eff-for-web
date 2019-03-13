@@ -20,8 +20,11 @@ class JgfJsonDecorator {
         }
     }
 
-    // todo: add doc block
-    // todo: check if just retunrning a multigraph for a single one makes sense according to spec
+    /**
+     * Transforms either a graph or a multigraph object to a JSON representation as per the spec.
+     * @param {JgfGraph,JgfMultiGraph} graph
+     * @returns {object}
+     */
     static toJson(graph) {
         this._guardAgainstInvalidGraphObject(graph);
 
@@ -50,7 +53,7 @@ class JgfJsonDecorator {
         });
 
         if (isSingleGraph) {
-            allGraphsJson = allGraphsJson.graphs[0];
+            return this._removeNullValues({ graph: allGraphsJson.graphs[0] });
         }
 
         return this._removeNullValues(allGraphsJson);
