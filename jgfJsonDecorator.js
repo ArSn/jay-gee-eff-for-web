@@ -1,5 +1,7 @@
 const _ = require('deepdash')(require('lodash'));
 const check = require('check-types');
+const { JgfNode } = require('./jgfNode');
+const { JgfEdge } = require('./jgfEdge');
 const { JgfGraph } = require('./jgfGraph');
 const { JgfMultiGraph } = require('./jgfMultiGraph');
 
@@ -10,9 +12,29 @@ const { JgfMultiGraph } = require('./jgfMultiGraph');
  */
 class JgfJsonDecorator {
 
-    // static fromJson(json) {
-    //     // todo: return graph or multigraph depending on data
-    // }
+    /**
+     * Transforms a JGF graph or multigraph from JSON to objects.
+     * @param {object} json
+     */
+    static fromJson(json) {
+        if (!json.graph) {
+            throw new Error('Can not handle multigraphs yet');
+        }
+
+        let jgraph = json.graph;
+
+        let graph = new JgfGraph(jgraph.type, jgraph.label, jgraph.directed, jgraph.metadata);
+
+        _.each(json.graph.nodes, (node) => {
+            graph.addNode(new JgfNode(node.id, node.label, node.metadata));
+        });
+
+        _.each(json.graph.edges, (edge) => {
+            graph.addEdge(new JgfEdge(edge.source, edge.target, edge.relation, edge.label, edge.metadata, edge.directed));
+        });
+
+        return graph;
+    }
 
     static _guardAgainstInvalidGraphObject(graph) {
         if (!check.instance(graph, JgfGraph) && !check.instance(graph, JgfMultiGraph)) {
