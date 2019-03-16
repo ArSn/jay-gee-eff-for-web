@@ -13,23 +13,40 @@ const { JgfMultiGraph } = require('./jgfMultiGraph');
 class JgfJsonDecorator {
 
     /**
-     * Transforms a JGF graph or multigraph from JSON to objects.
+     * Creates a JGF graph or multigraph from JSON.
      * @param {object} json
+     * @returns {JgfGraph,JgfMultiGraph}
      */
     static fromJson(json) {
-        if (!json.graph) {
-            throw new Error('Can not handle multigraphs yet');
+        if (check.assigned(json.graph)) {
+            return this._graphFromJson(json.graph);
         }
 
-        let jgraph = json.graph;
+        if (check.assigned(json.graphs)) {
+            // TODO: actually, multi graph should transform those properts to and from JSON too
+            let graph = new JgfMultiGraph(null, null, null);
+            _.each(json.graphs, (graphJson) => {
+                graph.addGraph(this._graphFromJson(graphJson))
+            });
+            return graph;
+        }
 
-        let graph = new JgfGraph(jgraph.type, jgraph.label, jgraph.directed, jgraph.metadata);
+        throw new Error('Passed json has to to have a "graph" or "graphs" property.');
+    }
 
-        _.each(json.graph.nodes, (node) => {
+    /**
+     * Creates a single JGF graph from JSON.
+     * @param {object} graphJson
+     * @returns {JgfGraph}
+     */
+    static _graphFromJson(graphJson) {
+        let graph = new JgfGraph(graphJson.type, graphJson.label, graphJson.directed, graphJson.metadata);
+
+        _.each(graphJson.nodes, (node) => {
             graph.addNode(new JgfNode(node.id, node.label, node.metadata));
         });
 
-        _.each(json.graph.edges, (edge) => {
+        _.each(graphJson.edges, (edge) => {
             graph.addEdge(new JgfEdge(edge.source, edge.target, edge.relation, edge.label, edge.metadata, edge.directed));
         });
 
