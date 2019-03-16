@@ -12,8 +12,6 @@ describe('Node', () => {
         });
 
         it('should only set objects passed as metadata to metadata property', () => {
-            let node;
-
             ['string-metadata', 2, ['bla'], {}].forEach((invalidMetaData) => {
                 assert.throws(() => new JgfNode('id', 'label', invalidMetaData));
             });

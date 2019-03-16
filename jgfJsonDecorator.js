@@ -28,6 +28,7 @@ class JgfJsonDecorator {
             _.each(json.graphs, (graphJson) => {
                 graph.addGraph(this._graphFromJson(graphJson))
             });
+
             return graph;
         }
 

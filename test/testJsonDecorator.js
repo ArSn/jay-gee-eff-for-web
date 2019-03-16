@@ -48,59 +48,6 @@ describe('JsonDecorator', () => {
             });
         });
 
-        it('should transform single graph json to JgfGraph', () => {
-            const json = {
-                graph: {
-                    type: 'someType',
-                    label: 'someLabel',
-                    directed: true,
-                    metadata: { bla: 'some-meta-data' },
-                    nodes:
-                        [
-                            {id: 'firstNodeId', label: 'blubb-label', metadata: { bla: 'whoopp' }},
-                            {id: 'secondNodeId', label: 'bla-label', metadata: { bli: 'whaaat' }},
-                        ],
-                    edges:
-                        [{
-                            source: 'firstNodeId',
-                            target: 'secondNodeId',
-                            relation: 'is-test-edge',
-                            label: 'edge-label',
-                            metadata: {meta: 'edge-metadata'},
-                            directed: true,
-                        }]
-                }
-            };
-
-            let graph = JgfJsonDecorator.fromJson(json);
-
-            assert.instanceOf(graph, JgfGraph);
-            assert.equal(graph.type, 'someType');
-            assert.equal(graph.label, 'someLabel');
-            assert.equal(graph.directed, true);
-            assert.deepEqual(graph.metadata, { bla: "some-meta-data" });
-            assert.equal(graph.nodes.length, 2);
-            assert.equal(graph.edges.length, 1);
-
-            assert.instanceOf(graph.nodes[0], JgfNode);
-            assert.equal(graph.nodes[0].id, 'firstNodeId');
-            assert.equal(graph.nodes[0].label, 'blubb-label');
-            assert.deepEqual(graph.nodes[0].metadata, { bla: 'whoopp' });
-            assert.instanceOf(graph.nodes[1], JgfNode);
-            assert.equal(graph.nodes[1].id, 'secondNodeId');
-            assert.equal(graph.nodes[1].label, 'bla-label');
-            assert.deepEqual(graph.nodes[1].metadata, { bli: 'whaaat' });
-
-            assert.instanceOf(graph.edges[0], JgfEdge);
-            assert.equal(graph.edges[0].source, 'firstNodeId');
-            assert.equal(graph.edges[0].target, 'secondNodeId');
-            assert.equal(graph.edges[0].relation, 'is-test-edge');
-            assert.equal(graph.edges[0].label, 'edge-label');
-            assert.deepEqual(graph.edges[0].metadata, {meta: 'edge-metadata'});
-            assert.equal(graph.edges[0].directed, true);
-
-        });
-
         it('should transform multigraph to json', () => {
             let multigraph = new JgfMultiGraph('weird-multigraph', 'This is weird', { weirdness: 100 });
 
@@ -164,6 +111,63 @@ describe('JsonDecorator', () => {
                     }
                 ]
             });
+        });
+
+    });
+
+    describe('#from json', () => {
+
+        it('should transform single graph json to JgfGraph', () => {
+            const json = {
+                graph: {
+                    type: 'someType',
+                    label: 'someLabel',
+                    directed: true,
+                    metadata: { bla: 'some-meta-data' },
+                    nodes:
+                        [
+                            {id: 'firstNodeId', label: 'blubb-label', metadata: { bla: 'whoopp' }},
+                            {id: 'secondNodeId', label: 'bla-label', metadata: { bli: 'whaaat' }},
+                        ],
+                    edges:
+                        [{
+                            source: 'firstNodeId',
+                            target: 'secondNodeId',
+                            relation: 'is-test-edge',
+                            label: 'edge-label',
+                            metadata: {meta: 'edge-metadata'},
+                            directed: true,
+                        }]
+                }
+            };
+
+            let graph = JgfJsonDecorator.fromJson(json);
+
+            assert.instanceOf(graph, JgfGraph);
+            assert.equal(graph.type, 'someType');
+            assert.equal(graph.label, 'someLabel');
+            assert.equal(graph.directed, true);
+            assert.deepEqual(graph.metadata, { bla: "some-meta-data" });
+            assert.equal(graph.nodes.length, 2);
+            assert.equal(graph.edges.length, 1);
+
+            assert.instanceOf(graph.nodes[0], JgfNode);
+            assert.equal(graph.nodes[0].id, 'firstNodeId');
+            assert.equal(graph.nodes[0].label, 'blubb-label');
+            assert.deepEqual(graph.nodes[0].metadata, { bla: 'whoopp' });
+            assert.instanceOf(graph.nodes[1], JgfNode);
+            assert.equal(graph.nodes[1].id, 'secondNodeId');
+            assert.equal(graph.nodes[1].label, 'bla-label');
+            assert.deepEqual(graph.nodes[1].metadata, { bli: 'whaaat' });
+
+            assert.instanceOf(graph.edges[0], JgfEdge);
+            assert.equal(graph.edges[0].source, 'firstNodeId');
+            assert.equal(graph.edges[0].target, 'secondNodeId');
+            assert.equal(graph.edges[0].relation, 'is-test-edge');
+            assert.equal(graph.edges[0].label, 'edge-label');
+            assert.deepEqual(graph.edges[0].metadata, {meta: 'edge-metadata'});
+            assert.equal(graph.edges[0].directed, true);
+
         });
 
         it('should transform json of a multigraph to JgfMultiGraph', () => {
@@ -267,6 +271,12 @@ describe('JsonDecorator', () => {
             assert.equal(graph.edges[0].label, 'other-edge-label');
             assert.deepEqual(graph.edges[0].metadata, { other_meta: "otheredge-metadata" });
             assert.equal(graph.edges[0].directed, false);
+        });
+
+        it('should throw error for json that does not have a graph or graphs property', () => {
+            ['string-metadata', 2, ['bla'], {}, { graphiti: 'graphiti' }, { more:'nonsense'}].forEach((invalidJson) => {
+                assert.throws(() => JgfJsonDecorator.fromJson(invalidJson));
+            });
         });
     });
 });
