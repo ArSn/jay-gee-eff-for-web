@@ -23,8 +23,7 @@ class JgfJsonDecorator {
         }
 
         if (check.assigned(json.graphs)) {
-            // TODO: actually, multi graph should transform those properts to and from JSON too
-            let graph = new JgfMultiGraph(null, null, null);
+            let graph = new JgfMultiGraph(json.type, json.label, json.metadata);
             _.each(json.graphs, (graphJson) => {
                 graph.addGraph(this._graphFromJson(graphJson))
             });

@@ -175,7 +175,9 @@ describe('JsonDecorator', () => {
 
         it('should transform json of a multigraph to JgfMultiGraph', () => {
             const json = {
-
+                type: 'weird-multigraph',
+                label: 'This is weird',
+                metadata: { weirdness: 100 },
                 graphs: [
                     {
                         type: "someType",
@@ -219,6 +221,9 @@ describe('JsonDecorator', () => {
             let multigraph = JgfJsonDecorator.fromJson(json);
             assert.instanceOf(multigraph, JgfMultiGraph);
             assert.equal(multigraph.graphs.length, 2);
+            assert.equal(multigraph.type, 'weird-multigraph');
+            assert.equal(multigraph.label, 'This is weird');
+            assert.deepEqual(multigraph.metadata, { weirdness: 100 });
 
 
             let graph = multigraph.graphs[0];
