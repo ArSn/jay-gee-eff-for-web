@@ -70,11 +70,25 @@ class JgfJsonDecorator {
 
         const isSingleGraph = check.instance(graph, JgfGraph);
 
-        let normalizedGraph = this._normalizeToMultiGraph(graph);
         let allGraphsJson = {
             graphs: [],
         };
 
+        this._transformGraphsToJson(graph, allGraphsJson);
+
+        if (isSingleGraph) {
+            return this._removeNullValues({ graph: allGraphsJson.graphs[0] });
+        }
+
+        allGraphsJson.type = graph.type;
+        allGraphsJson.label = graph.label;
+        allGraphsJson.metadata = graph.metadata;
+
+        return this._removeNullValues(allGraphsJson);
+    }
+
+    static _transformGraphsToJson(graph, allGraphsJson) {
+        let normalizedGraph = this._normalizeToMultiGraph(graph);
         _.each(normalizedGraph.graphs, (singleGraph) => {
 
             let singleGraphJson = {
@@ -91,12 +105,6 @@ class JgfJsonDecorator {
 
             allGraphsJson.graphs.push(singleGraphJson);
         });
-
-        if (isSingleGraph) {
-            return this._removeNullValues({ graph: allGraphsJson.graphs[0] });
-        }
-
-        return this._removeNullValues(allGraphsJson);
     }
 
     static _removeNullValues(json) {
