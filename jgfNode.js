@@ -9,7 +9,7 @@ class JgfNode {
      * Constructor
      * @param {string} id Primary key for the node, that is unique for the object type.
      * @param {string} label A text display for the node.
-     * @param {object,null} metadata Metadata about the node.
+     * @param {object|null} metadata Metadata about the node.
      */
     constructor(id, label, metadata = null) {
         this.id = id;

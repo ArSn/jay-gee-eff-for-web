@@ -15,7 +15,7 @@ class JgfJsonDecorator {
     /**
      * Creates a JGF graph or multigraph from JSON.
      * @param {object} json
-     * @returns {JgfGraph,JgfMultiGraph}
+     * @returns {JgfGraph|JgfMultiGraph}
      */
     static fromJson(json) {
         if (check.assigned(json.graph)) {
@@ -61,7 +61,7 @@ class JgfJsonDecorator {
 
     /**
      * Transforms either a graph or a multigraph object to a JSON representation as per the spec.
-     * @param {JgfGraph,JgfMultiGraph} graph
+     * @param {JgfGraph|JgfMultiGraph} graph
      * @returns {object}
      */
     static toJson(graph) {

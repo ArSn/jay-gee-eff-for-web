@@ -9,10 +9,10 @@ class JgfEdge {
      * Constructor
      * @param {string} source Source node id
      * @param {string} target Target node id
-     * @param {string,null} relation Edge relation (AKA 'relationship type')
-     * @param {string,null} label Edge label (the display name of the edge)
-     * @param {object,null} metadata Custom edge meta data
-     * @param {boolean,null} directed true for a directed edge, false for undirected
+     * @param {string|null} relation Edge relation (AKA 'relationship type')
+     * @param {string|null} label Edge label (the display name of the edge)
+     * @param {object|null} metadata Custom edge meta data
+     * @param {boolean|null} directed true for a directed edge, false for undirected
      */
     constructor(source, target, relation = null, label = null, metadata = null, directed = true) {
         this.source = source;

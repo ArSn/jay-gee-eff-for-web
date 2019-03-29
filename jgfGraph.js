@@ -13,7 +13,7 @@ class JgfGraph {
      * @param {string} type graph classification
      * @param {string} label a text display for the graph
      * @param {boolean} directed true for a directed graph, false for an undirected graph
-     * @param {object,null} metadata about the graph
+     * @param {object|null} metadata about the graph
      */
     constructor(type = '', label = '', directed = true, metadata = null) {
         this._nodes = [];
@@ -169,7 +169,7 @@ class JgfGraph {
      * Get edges between source node and target node, with an optional edge relation.
      * @param {string} source Source node ID.
      * @param {string} target Target node ID.
-     * @param {string,null} relation
+     * @param {string|null} relation
      */
     getEdgesByNodes(source, target, relation = null) {
         this._guardAgainstNonExistentNodes(source, target);
