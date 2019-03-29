@@ -19,7 +19,7 @@ all_tests:
 github_pages:
     script:
         - rm -rf docs
-        - git clone --depth 1 https://ArSn:$GITHUB_ACCESS_TOKEN@github.com/$GITHUB_USERNAME/jay-gee-eff-for-web-docs docs
+        - git clone https://ArSn:$GITHUB_ACCESS_TOKEN@github.com/$GITHUB_USERNAME/jay-gee-eff-for-web-docs docs
         - yarn run generate-docs
         - cd docs
         - git config user.email "$GITHUB_EMAIL"
