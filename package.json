@@ -5,7 +5,7 @@
   "main": "index.js",
   "scripts": {
     "test": "nyc mocha --colors test && nyc --reporter=lcov mocha test > /dev/null",
-    "generate-docs": "node_modules/.bin/jsdoc -c jsdoc.json"
+    "generate-docs": "node_modules/.bin/jsdoc -c jsdoc.json APIDOCS.README.md"
   },
   "repository": {
     "type": "git",
