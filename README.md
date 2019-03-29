@@ -20,6 +20,11 @@ npm install jay-gee-eff-for-web
 ```
 
 # Usage
+
+## API Docs
+
+You can find an API documentation over at [arsn.github.io/jay-gee-eff-for-web-docs](https://arsn.github.io/jay-gee-eff-for-web-docs/). This is aiming to describe all classes and methods in as much detail as possible.
+
 ## Example code
 
 ```javascript
