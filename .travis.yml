@@ -19,10 +19,12 @@ deploy:
     provider: pages
     skip_cleanup: true
     github_token: $GITHUB_TOKEN
+    email: $GITHUB_EMAIL
+    name: $GITHUB_USERNAME
     keep_history: true
     repo: jay-gee-eff-for-web-docs
-    committer_from_gh: true
     local_dir: docs
     target_branch: master
+    verbose: true
     on:
         branch: master
