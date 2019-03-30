@@ -1,4 +1,4 @@
-image: node:11.13.0-alpine
+image: node:11.13.0
 
 cache:
     paths:
