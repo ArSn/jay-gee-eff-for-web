@@ -23,5 +23,6 @@ deploy:
     repo: jay-gee-eff-for-web-docs
     committer_from_gh: true
     local_dir: docs
+    target_branch: master
     on:
         branch: master
