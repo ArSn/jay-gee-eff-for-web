@@ -1,31 +1,31 @@
-image: node:11.13.0
-
-cache:
-    paths:
-        - node_modules/
-
-all_tests:
-    script:
-        - yarn install
-        - yarn global add nyc
-        - curl -L https://codeclimate.com/downloads/test-reporter/test-reporter-latest-linux-amd64 > ./cc-test-reporter
-        - chmod +x ./cc-test-reporter
-        - ./cc-test-reporter before-build
-        - nyc --reporter=lcov yarn run mocha --colors test
-        - CC_TEST_REPORTER_ID=e5030292b1e57c0a42df0f32a6f4ac8cc6246340619d54ec60aa3822b6d6fec2 ./cc-test-reporter after-build
-    only:
-        - master
-
-github_pages:
-    script:
-        - rm -rf docs
-        - git clone https://ArSn:$GITHUB_ACCESS_TOKEN@github.com/$GITHUB_USERNAME/jay-gee-eff-for-web-docs docs
-        - yarn run generate-docs
-        - cd docs
-        - git config user.email "$GITHUB_EMAIL"
-        - git config --global user.name "$GITHUB_USERNAME"
-        - git add -A
-        - git commit -m "Doc build from $CI_SERVER_NAME $CI_PIPELINE_ID for commit '$CI_COMMIT_MESSAGE ($CI_COMMIT_SHA)'"
-        - git push
-    only:
-        - master
+#image: node:11.13.0
+#
+#cache:
+#    paths:
+#        - node_modules/
+#
+#all_tests:
+#    script:
+#        - yarn install
+#        - yarn global add nyc
+#        - curl -L https://codeclimate.com/downloads/test-reporter/test-reporter-latest-linux-amd64 > ./cc-test-reporter
+#        - chmod +x ./cc-test-reporter
+#        - ./cc-test-reporter before-build
+#        - nyc --reporter=lcov yarn run mocha --colors test
+#        - CC_TEST_REPORTER_ID=e5030292b1e57c0a42df0f32a6f4ac8cc6246340619d54ec60aa3822b6d6fec2 ./cc-test-reporter after-build
+#    only:
+#        - master
+#
+#github_pages:
+#    script:
+#        - rm -rf docs
+#        - git clone https://ArSn:$GITHUB_ACCESS_TOKEN@github.com/$GITHUB_USERNAME/jay-gee-eff-for-web-docs docs
+#        - yarn run generate-docs
+#        - cd docs
+#        - git config user.email "$GITHUB_EMAIL"
+#        - git config --global user.name "$GITHUB_USERNAME"
+#        - git add -A
+#        - git commit -m "Doc build from $CI_SERVER_NAME $CI_PIPELINE_ID for commit '$CI_COMMIT_MESSAGE ($CI_COMMIT_SHA)'"
+#        - git push
+#    only:
+#        - master
