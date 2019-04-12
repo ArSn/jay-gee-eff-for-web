@@ -22,7 +22,7 @@ deploy:
     email: $GITHUB_EMAIL
     name: $GITHUB_USERNAME
     keep_history: true
-    repo: jay-gee-eff-for-web-docs
+    repo: ArSn/jay-gee-eff-for-web-docs
     local_dir: docs
     target_branch: master
     verbose: true
