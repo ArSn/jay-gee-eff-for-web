@@ -38,6 +38,7 @@ class JgfJsonDecorator {
      * Creates a single JGF graph from JSON.
      * @param {object} graphJson
      * @returns {JgfGraph}
+     * @private
      */
     static _graphFromJson(graphJson) {
         let graph = new JgfGraph(graphJson.type, graphJson.label, graphJson.directed, graphJson.metadata);
@@ -113,6 +114,7 @@ class JgfJsonDecorator {
     /**
      * @param {JgfGraph} graph
      * @param {object} json
+     * @private
      */
     static _edgesToJson(graph, json) {
         _.each(graph.edges, (edge) => {
@@ -130,6 +132,7 @@ class JgfJsonDecorator {
     /**
      * @param {JgfGraph} graph
      * @param {object} json
+     * @private
      */
     static _nodesToJson(graph, json) {
         _.each(graph.nodes, (node) => {
