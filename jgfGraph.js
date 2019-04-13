@@ -4,16 +4,16 @@ const { JgfEdge } = require('./jgfEdge');
 const { Guard } = require('./guard');
 
 /**
- * A single Jgf graph instance, always contained in a parent JgfContainer
+ * An graph object represents the full graph and contains all nodes and edges that the graph consists of.
  */
 class JgfGraph {
 
     /**
      * Constructor
-     * @param {string} type graph classification
-     * @param {string} label a text display for the graph
-     * @param {boolean} directed true for a directed graph, false for an undirected graph
-     * @param {object|null} metadata about the graph
+     * @param {string} type Graph classification.
+     * @param {string} label A text display for the graph.
+     * @param {boolean} directed Pass true for a directed graph, false for an undirected graph.
+     * @param {object|null} metadata Custom graph metadata.
      */
     constructor(type = '', label = '', directed = true, metadata = null) {
         this._nodes = [];
@@ -57,7 +57,7 @@ class JgfGraph {
     }
 
     /**
-     * Set the graph meta data
+     * Sets the graph meta data.
      */
     set metadata(value) {
         Guard.assertValidMetadataOrNull(value);
@@ -65,29 +65,30 @@ class JgfGraph {
     }
 
     /**
-     * Returns the graph meta data
+     * Returns the graph meta data.
      */
     get metadata() {
         return this._metadata;
     }
 
     /**
-     * Returns all nodes
+     * Returns all nodes.
      */
     get nodes() {
         return this._nodes;
     }
 
     /**
-     * Returns all edges
+     * Returns all edges.
      */
     get edges() {
         return this._edges;
     }
 
     /**
-     * Adds a new node
+     * Adds a node to the graph.
      * @param {JgfNode} node Node to be added.
+     * @throws Error if the node already exists.
      */
     addNode(node) {
         if (this._nodeExists(node)) {
@@ -99,8 +100,9 @@ class JgfGraph {
 
 
     /**
-     * Adds multiple nodes
-     * @param {JgfNode[]} nodes A collection of Jgf node objects.
+     * Adds multiple nodes to the graph.
+     * @param {JgfNode[]} nodes A collection of Jgf node objects to be added.
+     * @throws Error if one of nodes already exists.
      */
     addNodes(nodes) {
         for (let node of nodes) {
@@ -109,7 +111,7 @@ class JgfGraph {
     }
 
     /**
-     * Removes an existing graph node
+     * Removes an existing node from the graph.
      * @param {JgfNode} node Node to be removed.
      */
     removeNode(node) {
@@ -121,16 +123,16 @@ class JgfGraph {
     }
 
     /**
-     * Get a node by a node id.
-     * @param {string} nodeId Unique node id
+     * Get a node by a node ID.
+     * @param {string} nodeId Unique node ID.
      */
     getNodeById(nodeId) {
         return this._findNodeById(nodeId);
     }
 
     /**
-     * Adds an edge between a source node and a target node.
-     * @param {JgfEdge} edge Source node id
+     * Adds an edge to the graph.
+     * @param {JgfEdge} edge The edge to be added.
      */
     addEdge(edge) {
         this._guardAgainstNonExistentNodes(edge.source, edge.target);
@@ -148,8 +150,8 @@ class JgfGraph {
     }
 
     /**
-     * Adds multiple edges
-     * @param {JgfEdge[]} edges A collection of Jgf edge objects.
+     * Adds multiple edges to the graph.
+     * @param {JgfEdge[]} edges A collection of Jgf edge objects to be added.
      */
     addEdges(edges) {
         for (let edge of edges) {
@@ -158,7 +160,7 @@ class JgfGraph {
     }
 
     /**
-     * Removes existing graph edge.
+     * Removes existing edge from the graph.
      * @param {JgfEdge} edge Edge to be removed.
      */
     removeEdge(edge) {
@@ -169,7 +171,7 @@ class JgfGraph {
      * Get edges between source node and target node, with an optional edge relation.
      * @param {string} source Source node ID.
      * @param {string} target Target node ID.
-     * @param {string|null} relation
+     * @param {string|null} relation If passed, only edges having this relation will be returned.
      */
     getEdgesByNodes(source, target, relation = null) {
         this._guardAgainstNonExistentNodes(source, target);

@@ -8,6 +8,8 @@ JGF - A JSON Graph Format npm module to be used in the web (i.e. does not requir
 
 I will not include a list of features here since this package aims to completely fulfill the specification linked above.
 
+If you want to learn more about graphs or are not sure what a graph is and whether you may need it or not, have a look at the [graph theory wikipedia article](https://en.wikipedia.org/wiki/Graph_theory).
+
 # Installation
 
 with yarn

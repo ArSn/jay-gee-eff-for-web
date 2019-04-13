@@ -1,7 +1,7 @@
 const { Guard } = require('./guard');
 
 /**
- * A node object represents a node in a graph.
+ * A node object represents a node in a graph. In graph theory, nodes are also called points or vertices.
  */
 class JgfNode {
 

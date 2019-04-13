@@ -6,16 +6,18 @@ const { JgfGraph } = require('./jgfGraph');
 const { JgfMultiGraph } = require('./jgfMultiGraph');
 
 /**
- * Transforms graphs or multigraphs to json or vice versa.
+ * Transforms graphs or multi graphs to json or vice versa.
  *
- * Note that this is just called decorator for semantic reasons and does not follow the GoF decorator design pattern.
+ * Note that this is just called decorator for semantic reasons and does not follow and does not intend to follow
+ * the GoF decorator design pattern.
  */
 class JgfJsonDecorator {
 
     /**
-     * Creates a JGF graph or multigraph from JSON.
-     * @param {object} json
-     * @returns {JgfGraph|JgfMultiGraph}
+     * Creates a Jgf graph or multi graph from JSON.
+     * @param {object} json JSON to be transformed to a graph or multigraph. This has to be according to the JGF.
+     * @throws Error if json can not be transformed to a graph or multi graph.
+     * @returns {JgfGraph|JgfMultiGraph} The created Jgf graph or multi graph object.
      */
     static fromJson(json) {
         if (check.assigned(json.graph)) {
@@ -56,14 +58,15 @@ class JgfJsonDecorator {
 
     static _guardAgainstInvalidGraphObject(graph) {
         if (!check.instance(graph, JgfGraph) && !check.instance(graph, JgfMultiGraph)) {
-            throw new Error('JgfJsonDecorator can only decorate graphs or multigraphs.');
+            throw new Error('JgfJsonDecorator can only decorate graphs or multi graphs.');
         }
     }
 
     /**
-     * Transforms either a graph or a multigraph object to a JSON representation as per the spec.
-     * @param {JgfGraph|JgfMultiGraph} graph
-     * @returns {object}
+     * Transforms either a graph or a multi graph object to a JSON representation as per the spec.
+     * @param {JgfGraph|JgfMultiGraph} graph The graph to be transformed to JSON.
+     * @throws Error if the passed graph or multi graph can not be transformed to JSON.
+     * @returns {object} A JSON representation of the passed graph or multi graph as according to the JGF.
      */
     static toJson(graph) {
         this._guardAgainstInvalidGraphObject(graph);

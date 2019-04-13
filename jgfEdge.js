@@ -1,18 +1,18 @@
 const { Guard } = require('./guard');
 
 /**
- * An edge object represents a edge between two nodes in a graph.
+ * An edge object represents a edge between two nodes in a graph. In graph theory, edges are also called lines or links.
  */
 class JgfEdge {
 
     /**
      * Constructor
-     * @param {string} source Source node id
-     * @param {string} target Target node id
-     * @param {string|null} relation Edge relation (AKA 'relationship type')
-     * @param {string|null} label Edge label (the display name of the edge)
-     * @param {object|null} metadata Custom edge meta data
-     * @param {boolean|null} directed true for a directed edge, false for undirected
+     * @param {string} source Source node ID.
+     * @param {string} target Target node ID.
+     * @param {string|null} relation Edge relation (aka 'relationship type').
+     * @param {string|null} label Edge label (the display name of the edge).
+     * @param {object|null} metadata Custom edge meta data.
+     * @param {boolean|null} directed Pass true for a directed edge, false for undirected.
      */
     constructor(source, target, relation = null, label = null, metadata = null, directed = true) {
         this.source = source;
