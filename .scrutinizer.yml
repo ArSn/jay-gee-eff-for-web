@@ -1,6 +1,8 @@
 checks:
     javascript: true
 build:
+    environment:
+        node: 11.15.0
     nodes:
         analysis:
             tests:
