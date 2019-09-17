@@ -19,8 +19,6 @@ deploy:
     provider: pages
     skip_cleanup: true
     github_token: $GITHUB_TOKEN
-    email: $GITHUB_EMAIL
-    name: $GITHUB_USERNAME
     keep_history: true
     repo: ArSn/jay-gee-eff-for-web-docs
     local_dir: docs
