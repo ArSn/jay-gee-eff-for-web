@@ -37,7 +37,7 @@
     "simple-mock": "^0.8.0"
   },
   "dependencies": {
-    "check-types": "^8.0",
+    "check-types": "^10.0",
     "deepdash": "^4.0",
     "lodash": "^4.17.11"
   }
