@@ -127,6 +127,12 @@ Full JSON representation:
 ```
 
 # References
+## Credits
+Big thanks to [bigman73](https://github.com/bigman73) for his original package which served as a template for this one and brought the idea.
+
+## Alternatives
+- [jay-gee-eff](https://github.com/bigman73/jay-gee-eff) - JGF package with local file accessibility, you want to use this if you plan to use it on the server side.
+
 ## JGF specification
 http://jsongraphformat.info/
 
