@@ -1,5 +1,5 @@
 const _ = require('lodash');
-const deepdash = require('deepdash');
+const deepdash = require('deepdash/deepdash');
 deepdash(_);
 const check = require('check-types');
 const { JgfNode } = require('./jgfNode');
