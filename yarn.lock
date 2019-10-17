@@ -208,9 +208,9 @@ check-error@^1.0.2:
   integrity sha1-V00xLt2Iu13YkS6Sht1sCu1KrII=
 
 check-types@^10.0:
-  version "10.0.0"
-  resolved "https://registry.yarnpkg.com/check-types/-/check-types-10.0.0.tgz#2a5ebaf236615601fb66167b46c09979a73043e6"
-  integrity sha512-FeKh/xUITytmx5fC709lzTnUJPDjeOrVZJ1cvkLwtxXJp8g0z7FY5heK5w1Iy8cYV5n563wCcnnxMjkAc4JzFA==
+  version "10.1.1"
+  resolved "https://registry.yarnpkg.com/check-types/-/check-types-10.1.1.tgz#4feac31c1e3bb97d36d2545816e97410ddbad1f9"
+  integrity sha512-sb68jHQLAzR0kFgfG4swq1XLzp2bIADwBpYjBbKaSvA+O9wJ1BgMKXIPMJvJPzCNuLaTzRYChDDK0OiyePOliQ==
 
 cliui@^5.0.0:
   version "5.0.0"
