@@ -207,10 +207,10 @@ check-error@^1.0.2:
   resolved "https://registry.yarnpkg.com/check-error/-/check-error-1.0.2.tgz#574d312edd88bb5dd8912e9286dd6c0aed4aac82"
   integrity sha1-V00xLt2Iu13YkS6Sht1sCu1KrII=
 
-check-types@^10.0:
-  version "10.0.0"
-  resolved "https://registry.yarnpkg.com/check-types/-/check-types-10.0.0.tgz#2a5ebaf236615601fb66167b46c09979a73043e6"
-  integrity sha512-FeKh/xUITytmx5fC709lzTnUJPDjeOrVZJ1cvkLwtxXJp8g0z7FY5heK5w1Iy8cYV5n563wCcnnxMjkAc4JzFA==
+check-types@^11.1:
+  version "11.1.1"
+  resolved "https://registry.yarnpkg.com/check-types/-/check-types-11.1.1.tgz#82b45cab716fcd8243964f9452b107ae22d97d29"
+  integrity sha512-ERidMpQiiCdZHeanDnOK8G0ewQH3DTCSQWim+36Nk4iEi6RJRyyRIkCsj6OMDnfxQUXmThpV2aCDDQyAPFb/5Q==
 
 cliui@^5.0.0:
   version "5.0.0"
