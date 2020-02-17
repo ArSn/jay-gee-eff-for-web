@@ -301,9 +301,9 @@ deep-eql@^3.0.1:
     type-detect "^4.0.0"
 
 deepdash@^4.0:
-  version "4.2.16"
-  resolved "https://registry.yarnpkg.com/deepdash/-/deepdash-4.2.16.tgz#d93f60589edd05ae9f55a686c4fc1bad76819f01"
-  integrity sha512-wySwFrIYeIP1rIJoecVKOhe1idAw5IDAWv1Nt46tpmlK7VWxu3bMxsC+nRVyon/QDKjviGZd5/pZzCXrCd23nw==
+  version "4.5.1"
+  resolved "https://registry.yarnpkg.com/deepdash/-/deepdash-4.5.1.tgz#e919bff330e9280c62e89e3fda096f43171b7d1c"
+  integrity sha512-6bb/XkvNJ9f9lnx9n8Z2KfNkykWgOBuop0cXu4Kr6WiMs6SIgw1Wj1TgBGn0PEg//uzPWdoA2jUFGtn1GNG0Rw==
   dependencies:
     lodash "^4.17.15"
     lodash-es "^4.17.15"
