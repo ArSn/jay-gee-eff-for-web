@@ -33,7 +33,7 @@
     "docdash": "^1.0.3",
     "jsdoc": "^3.5.5",
     "mocha": "^6.1.3",
-    "nyc": "^14.0",
+    "nyc": "^15.0",
     "simple-mock": "^0.8.0"
   },
   "dependencies": {
