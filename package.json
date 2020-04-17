@@ -38,7 +38,7 @@
   },
   "dependencies": {
     "check-types": "^11.1",
-    "deepdash": "^4.0",
+    "deepdash": "^5.0",
     "lodash": "^4.17.11"
   }
 }
