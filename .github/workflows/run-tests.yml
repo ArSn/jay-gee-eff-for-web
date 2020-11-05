@@ -26,7 +26,7 @@ jobs:
 
       - name: Run tests
         run: |
-          ./nyc --reporter=lcov yarn run mocha --colors test
+          yarn run test
           yarn run generate-docs
 
       - name: Report coverage
