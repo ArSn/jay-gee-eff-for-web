@@ -4,6 +4,8 @@ on: push
 
 jobs:
   run-tests:
+    env:
+      CC_TEST_REPORTER_ID: e5030292b1e57c0a42df0f32a6f4ac8cc6246340619d54ec60aa3822b6d6fec2
     name: Run tests and report coverage
     runs-on: ubuntu-latest
 
