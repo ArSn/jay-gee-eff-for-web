@@ -1,7 +1,7 @@
 version: '2.4'
 services:
     node:
-        image: node:11.15.0-alpine
+        image: node:14.15.0-alpine
         command: sh -c 'yarn install && yarn run test'
         working_dir: /app
         volumes:
