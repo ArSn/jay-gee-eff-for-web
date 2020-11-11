@@ -26,13 +26,14 @@ jobs:
 
     steps:
       - uses: actions/checkout@v2.3.1
-          with:
-            persist-credentials: false
+        with:
+          persist-credentials: false
 
       - name: Deploy
         uses: JamesIves/github-pages-deploy-action@3.7.1
         with:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           ACCESS_TOKEN: ${{ secrets.GH_TOKEN }}
+          REPOSITORY_NAME: ArSn/jay-gee-eff-for-web-docs
           BRANCH: master
           FOLDER: docs
