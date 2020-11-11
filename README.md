@@ -1,4 +1,4 @@
-[![Build Status](https://travis-ci.org/ArSn/jay-gee-eff-for-web.svg?branch=master)](https://travis-ci.org/ArSn/jay-gee-eff-for-web)
+[![Run tests](https://github.com/ArSn/jay-gee-eff-for-web/workflows/Run%20tests/badge.svg)](https://github.com/ArSn/jay-gee-eff-for-web/actions?query=workflow%3A%22Run+tests%22+branch%3Amaster)
 [![Scrutinizer Code Quality](https://scrutinizer-ci.com/g/ArSn/jay-gee-eff-for-web/badges/quality-score.png?b=master)](https://scrutinizer-ci.com/g/ArSn/jay-gee-eff-for-web/?branch=master)
 [![Maintainability](https://api.codeclimate.com/v1/badges/1994476894037cadfcea/maintainability)](https://codeclimate.com/github/ArSn/jay-gee-eff-for-web/maintainability)
 [![Test Coverage](https://api.codeclimate.com/v1/badges/1994476894037cadfcea/test_coverage)](https://codeclimate.com/github/ArSn/jay-gee-eff-for-web/test_coverage)
