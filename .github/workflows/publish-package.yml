@@ -35,7 +35,9 @@ jobs:
         with:
           node-version: 14.15.0
           registry-url: 'https://registry.npmjs.org'
-      - run: yarn run generate-docs
+      - run: |
+          yarn install
+          yarn run generate-docs
 
       - name: Deploy
         uses: JamesIves/github-pages-deploy-action@3.7.1
