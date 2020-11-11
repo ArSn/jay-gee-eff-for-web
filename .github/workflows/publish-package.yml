@@ -2,8 +2,8 @@ name: Publish package
 
 on:
   push:
-#    tags:
-#      - '*'
+    tags:
+      - '*'
 
 jobs:
   publish-package:
