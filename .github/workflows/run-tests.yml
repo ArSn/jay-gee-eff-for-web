@@ -33,3 +33,4 @@ jobs:
 
       - name: Report coverage
         run: ./cc-test-reporter after-build
+        if: ${{ github.ref == 'refs/heads/master' }}
