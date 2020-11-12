@@ -4,7 +4,7 @@
   "description": "JGF - JSON Graph Format helper module for usage in the web",
   "main": "index.js",
   "scripts": {
-    "test": "nyc mocha --colors test && nyc --reporter=lcov mocha test > /dev/null",
+    "test": "nyc mocha --colors test/** && nyc --reporter=lcov mocha test/** > /dev/null",
     "generate-docs": "node_modules/.bin/jsdoc -c jsdoc.json APIDOCS.README.md"
   },
   "repository": {
