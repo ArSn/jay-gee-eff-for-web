@@ -4,7 +4,7 @@
   "description": "JGF - JSON Graph Format helper module for usage in the web",
   "main": "index.js",
   "scripts": {
-    "test": "nyc mocha --colors test && nyc --reporter=lcov mocha test > /dev/null",
+    "test": "nyc mocha --colors test/** && nyc --reporter=lcov mocha test/** > /dev/null",
     "generate-docs": "node_modules/.bin/jsdoc -c jsdoc.json APIDOCS.README.md"
   },
   "repository": {
@@ -29,6 +29,7 @@
   },
   "homepage": "https://github.com/ArSn/jay-gee-eff-for-web#readme",
   "devDependencies": {
+    "ajv": "^4.11",
     "chai": "^4.2.0",
     "docdash": "^1.0.3",
     "jsdoc": "^3.5.5",
