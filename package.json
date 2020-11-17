@@ -29,7 +29,7 @@
   },
   "homepage": "https://github.com/ArSn/jay-gee-eff-for-web#readme",
   "devDependencies": {
-    "ajv": "^4.11",
+    "ajv": "^6.12",
     "chai": "^4.2.0",
     "docdash": "^1.0.3",
     "jsdoc": "^3.5.5",
