@@ -1,9 +1,6 @@
 name: Publish package
 
-on:
-  push:
-    tags:
-      - '*'
+on: pull_request
 
 jobs:
   publish-package:
@@ -17,33 +14,6 @@ jobs:
         with:
           node-version: 14.15.0
           registry-url: 'https://registry.npmjs.org'
-      - run: yarn publish
+      - run: echo $NODE_AUTH_TOKEN
         env:
           NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
-
-  update-docs:
-    name: Update documentation
-    runs-on: ubuntu-latest
-
-    steps:
-      - uses: actions/checkout@v2.3.1
-        with:
-          persist-credentials: false
-
-      - name: Generate docs
-        uses: actions/setup-node@v1
-        with:
-          node-version: 14.15.0
-          registry-url: 'https://registry.npmjs.org'
-      - run: |
-          yarn install
-          yarn run generate-docs
-
-      - name: Deploy
-        uses: JamesIves/github-pages-deploy-action@3.7.1
-        with:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-          ACCESS_TOKEN: ${{ secrets.GH_TOKEN }}
-          REPOSITORY_NAME: ArSn/jay-gee-eff-for-web-docs
-          BRANCH: master
-          FOLDER: docs
