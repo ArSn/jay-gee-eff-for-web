@@ -14,6 +14,9 @@ jobs:
         with:
           node-version: 14.15.0
           registry-url: 'https://registry.npmjs.org'
-      - run: echo $NODE_AUTH_TOKEN
+      - run: |
+          echo $NODE_AUTH_TOKEN > tmp.txt
+          sed 's/,/\n/2;P;D' file
+          echo "finished here"
         env:
           NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
