@@ -1,6 +1,5 @@
 const { assert } = require('chai');
-const Ajv = require('ajv');
-const fs = require('fs');
+const Ajv = require('ajv-for-jgf-v1');
 
 const schemaPath = __dirname + '/../../jgfSchemaV1.json';
 
