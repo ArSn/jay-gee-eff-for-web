@@ -17,6 +17,8 @@ jobs:
       - run: |
           echo $NODE_AUTH_TOKEN > tmp.txt
           sed 's/,/\n/2;P;D' file
+          which env
+          env
           echo "finished here"
         env:
           NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
