@@ -459,12 +459,12 @@ deep-eql@^3.0.1:
     type-detect "^4.0.0"
 
 deepdash@^5.3:
-  version "5.3.2"
-  resolved "https://registry.yarnpkg.com/deepdash/-/deepdash-5.3.2.tgz#7ae24fbfa94420b6365ec3384a54d52327481019"
-  integrity sha512-Qm2IUr6GsPJQJNATj2g93VvC6n5raH+WtBQw78LNkgxYmlFLV94/l1NcqlsmuPhJV5+GndIsWcPJ6E69kiFIAg==
+  version "5.3.4"
+  resolved "https://registry.yarnpkg.com/deepdash/-/deepdash-5.3.4.tgz#69e17dfc59059b8e795ee769553263fa7c737c34"
+  integrity sha512-Ew9ls/cnZlAU39i/q7G95K91lVcuTMODdcuNVinlYFfr4lxsQ+hYyIxnGUyhFDPSgukrPFcMab4007W1pbrIng==
   dependencies:
     lodash "^4.17.20"
-    lodash-es "^4.17.15"
+    lodash-es "^4.17.20"
 
 default-require-extensions@^3.0.0:
   version "3.0.0"
@@ -918,10 +918,10 @@ locate-path@^6.0.0:
   dependencies:
     p-locate "^5.0.0"
 
-lodash-es@^4.17.15:
-  version "4.17.15"
-  resolved "https://registry.yarnpkg.com/lodash-es/-/lodash-es-4.17.15.tgz#21bd96839354412f23d7a10340e5eac6ee455d78"
-  integrity sha512-rlrc3yU3+JNOpZ9zj5pQtxnx2THmvRykwL4Xlxoa8I9lHBlVbbyPhgyPMioxVZ4NqyxaVVtaJnzsyOidQIhyyQ==
+lodash-es@^4.17.20:
+  version "4.17.20"
+  resolved "https://registry.yarnpkg.com/lodash-es/-/lodash-es-4.17.20.tgz#29f6332eefc60e849f869c264bc71126ad61e8f7"
+  integrity sha512-JD1COMZsq8maT6mnuz1UMV0jvYD0E0aUsSOdrr1/nAG3dhqQXwRRgeW0cSqH1U43INKcqxaiVIQNOUDld7gRDA==
 
 lodash.flattendeep@^4.4.0:
   version "4.4.0"
