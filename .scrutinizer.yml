@@ -5,6 +5,7 @@ build:
         analysis:
             dependencies:
                 before:
+                    - 'nvm ls-remote'
                     - 'nvm install 16.14.2'
             tests:
                 override:
