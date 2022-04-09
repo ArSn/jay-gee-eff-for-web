@@ -15,7 +15,7 @@ jobs:
       - name: Publish new version to NPM
         uses: actions/setup-node@v1
         with:
-          node-version: 14.15.0
+          node-version: 16.14.2
           registry-url: 'https://registry.npmjs.org'
       - run: yarn publish
         env:
@@ -33,7 +33,7 @@ jobs:
       - name: Generate docs
         uses: actions/setup-node@v1
         with:
-          node-version: 14.15.0
+          node-version: 16.14.2
           registry-url: 'https://registry.npmjs.org'
       - run: |
           yarn install
