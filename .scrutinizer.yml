@@ -5,8 +5,9 @@ build:
         node: 16.14.2
     nodes:
         analysis:
-            before:
-                - 'nvm install 16.14.2'
+            dependencies:
+                before:
+                    - 'nvm install 16.14.2'
             tests:
                 override:
                     - js-scrutinizer-run
