@@ -5,9 +5,9 @@ build:
         node: 16.14.2
     nodes:
         analysis:
+            before:
+                - 'nvm install 16.14.2'
             tests:
-                before:
-                    - 'nvm install 16.14.2'
                 override:
                     - js-scrutinizer-run
 filter:
