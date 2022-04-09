@@ -6,9 +6,10 @@ build:
     nodes:
         analysis:
             tests:
+                before:
+                    - 'nvm install 16.14.2'
                 override:
                     - js-scrutinizer-run
-        tests: true
 filter:
     excluded_paths:
         - "coverage/" # only relevant on dev
