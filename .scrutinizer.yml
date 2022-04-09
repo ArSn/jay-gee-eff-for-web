@@ -2,7 +2,7 @@ checks:
     javascript: true
 build:
     environment:
-        node: 14.15.0
+        node: 16.14.2
     nodes:
         analysis:
             tests:
