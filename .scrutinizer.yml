@@ -1,8 +1,6 @@
 checks:
     javascript: true
 build:
-    environment:
-        node: 16.14.2
     nodes:
         analysis:
             dependencies:
