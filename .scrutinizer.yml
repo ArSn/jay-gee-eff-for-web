@@ -2,11 +2,9 @@ checks:
     javascript: true
 build:
     environment:
-        node: 16.14.2
+        node: 16.13.2 # for some reason nvm does not have the latest 16.14.2 yet
     nodes:
         analysis:
-            before:
-                - 'nvm install 16.14.2'
             tests:
                 override:
                     - js-scrutinizer-run
