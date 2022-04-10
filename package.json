@@ -1,6 +1,6 @@
 {
   "name": "jay-gee-eff-for-web",
-  "version": "0.2.1",
+  "version": "0.2.2",
   "description": "JGF - JSON Graph Format helper module for usage in the web",
   "main": "index.js",
   "scripts": {
