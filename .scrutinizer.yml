@@ -2,13 +2,12 @@ checks:
     javascript: true
 build:
     environment:
-        node: 16.14.2
+        node: 16.13.2 # for some reason nvm does not have the latest 16.14.2 yet
     nodes:
         analysis:
             tests:
                 override:
                     - js-scrutinizer-run
-        tests: true
 filter:
     excluded_paths:
         - "coverage/" # only relevant on dev
