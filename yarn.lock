@@ -140,6 +140,13 @@
   resolved "https://registry.yarnpkg.com/@istanbuljs/schema/-/schema-0.1.2.tgz#26520bf09abe4a5644cd5414e37125a8954241dd"
   integrity sha512-tsAQNx32a8CoFhjhijUIhI4kccIAgmGhy8LZMZgGfmXcpMbPRUqn5LWmgRttILi6yeGmBJd2xsPkFMs0PzgPCw==
 
+"@jsdoc/salty@^0.2.1":
+  version "0.2.1"
+  resolved "https://registry.yarnpkg.com/@jsdoc/salty/-/salty-0.2.1.tgz#815c487c859eca81ad3dfea540f830e1ff9d3392"
+  integrity sha512-JXwylDNSHa549N9uceDYu8D4GMXwSo3H8CCPYEQqxhhHpxD28+lRl2b3bS/caaPj5w1YD3SWtrficJNTnUjGpg==
+  dependencies:
+    lodash "^4.17.21"
+
 "@types/color-name@^1.1.1":
   version "1.1.1"
   resolved "https://registry.yarnpkg.com/@types/color-name/-/color-name-1.1.1.tgz#1c1261bbeaa10a8055bbc5d8ab84b7b2afc846a0"
@@ -653,6 +660,11 @@ graceful-fs@^4.1.15:
   resolved "https://registry.yarnpkg.com/graceful-fs/-/graceful-fs-4.1.15.tgz#ffb703e1066e8a0eeaa4c8b80ba9253eeefbfb00"
   integrity sha512-6uHUhOPEBgQ24HM+r6b/QwWfZq+yiFcipKFrOFiBEnWdy5sdzYoi+pJeQaPI5qOLRFqWmAXUPQNsielzdLoecA==
 
+graceful-fs@^4.1.9:
+  version "4.2.10"
+  resolved "https://registry.yarnpkg.com/graceful-fs/-/graceful-fs-4.2.10.tgz#147d3a006da4ca3ce14728c7aefc287c367d7a6c"
+  integrity sha512-9ByhssR2fPVsNZj478qUUbKfmL0+t5BDVyjShtyZZLiK7ZDAArFFfopyOTj0M05wE2tJPisA4iTnnXl2YoPvOA==
+
 has-flag@^3.0.0:
   version "3.0.0"
   resolved "https://registry.yarnpkg.com/has-flag/-/has-flag-3.0.0.tgz#b5d454dc2199ae225699f3467e5a07f3b955bafd"
@@ -854,25 +866,25 @@ js2xmlparser@^4.0.2:
   dependencies:
     xmlcreate "^2.0.4"
 
-jsdoc@^3.5.5:
-  version "3.6.10"
-  resolved "https://registry.yarnpkg.com/jsdoc/-/jsdoc-3.6.10.tgz#dc903c44763b78afa7d94d63da475d20bc224cc4"
-  integrity sha512-IdQ8ppSo5LKZ9o3M+LKIIK8i00DIe5msDvG3G81Km+1dhy0XrOWD0Ji8H61ElgyEj/O9KRLokgKbAM9XX9CJAg==
+jsdoc@^4.0.0:
+  version "4.0.0"
+  resolved "https://registry.yarnpkg.com/jsdoc/-/jsdoc-4.0.0.tgz#9569f79ea5b14ba4bc726da1a48fe6a241ad7893"
+  integrity sha512-tzTgkklbWKrlaQL2+e3NNgLcZu3NaK2vsHRx7tyHQ+H5jcB9Gx0txSd2eJWlMC/xU1+7LQu4s58Ry0RkuaEQVg==
   dependencies:
     "@babel/parser" "^7.9.4"
+    "@jsdoc/salty" "^0.2.1"
     "@types/markdown-it" "^12.2.3"
     bluebird "^3.7.2"
     catharsis "^0.9.0"
     escape-string-regexp "^2.0.0"
     js2xmlparser "^4.0.2"
-    klaw "^4.0.1"
+    klaw "^3.0.0"
     markdown-it "^12.3.2"
     markdown-it-anchor "^8.4.1"
     marked "^4.0.10"
     mkdirp "^1.0.4"
     requizzle "^0.2.3"
     strip-json-comments "^3.1.0"
-    taffydb "2.6.2"
     underscore "~1.13.2"
 
 jsesc@^2.5.1:
@@ -899,10 +911,12 @@ jsonify@~0.0.0:
   resolved "https://registry.yarnpkg.com/jsonify/-/jsonify-0.0.0.tgz#2c74b6ee41d93ca51b7b5aaee8f503631d252a73"
   integrity sha1-LHS27kHZPKUbe1qu6PUDYx0lKnM=
 
-klaw@^4.0.1:
-  version "4.0.1"
-  resolved "https://registry.yarnpkg.com/klaw/-/klaw-4.0.1.tgz#8dc6f5723f05894e8e931b516a8ff15c2976d368"
-  integrity sha512-pgsE40/SvC7st04AHiISNewaIMUbY5V/K8b21ekiPiFoYs/EYSdsGa+FJArB1d441uq4Q8zZyIxvAzkGNlBdRw==
+klaw@^3.0.0:
+  version "3.0.0"
+  resolved "https://registry.yarnpkg.com/klaw/-/klaw-3.0.0.tgz#b11bec9cf2492f06756d6e809ab73a2910259146"
+  integrity sha512-0Fo5oir+O9jnXu5EefYbVK+mHMBeEVEy2cmctR1O1NECcCkPRreJKrS6Qt/j3KC2C148Dfo9i3pCmCMsdqGr0g==
+  dependencies:
+    graceful-fs "^4.1.9"
 
 linkify-it@^3.0.1:
   version "3.0.3"
@@ -1390,11 +1404,6 @@ supports-color@^7.1.0:
   integrity sha512-qpCAvRl9stuOHveKsn7HncJRvv501qIacKzQlO/+Lwxc9+0q2wLyv4Dfvt80/DPn2pqOBsJdDiogXGR9+OvwRw==
   dependencies:
     has-flag "^4.0.0"
-
-taffydb@2.6.2:
-  version "2.6.2"
-  resolved "https://registry.yarnpkg.com/taffydb/-/taffydb-2.6.2.tgz#7cbcb64b5a141b6a2efc2c5d2c67b4e150b2a268"
-  integrity sha1-fLy2S1oUG2ou/CxdLGe04VCyomg=
 
 test-exclude@^6.0.0:
   version "6.0.0"
