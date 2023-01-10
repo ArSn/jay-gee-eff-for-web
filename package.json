@@ -31,7 +31,7 @@
   "devDependencies": {
     "ajv-for-jgf-v1": "npm:ajv@^4.11",
     "chai": "^4.2.0",
-    "docdash": "^1.0.3",
+    "docdash": "^2.0.1",
     "jsdoc": "^3.5.5",
     "mocha": "^10.0.0",
     "nyc": "^15.0",
