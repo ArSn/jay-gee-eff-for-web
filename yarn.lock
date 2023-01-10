@@ -140,6 +140,13 @@
   resolved "https://registry.yarnpkg.com/@istanbuljs/schema/-/schema-0.1.2.tgz#26520bf09abe4a5644cd5414e37125a8954241dd"
   integrity sha512-tsAQNx32a8CoFhjhijUIhI4kccIAgmGhy8LZMZgGfmXcpMbPRUqn5LWmgRttILi6yeGmBJd2xsPkFMs0PzgPCw==
 
+"@jsdoc/salty@^0.2.1":
+  version "0.2.2"
+  resolved "https://registry.yarnpkg.com/@jsdoc/salty/-/salty-0.2.2.tgz#567017ddda2048c5ff921aeffd38564a0578fdca"
+  integrity sha512-A1FrVnc7L9qI2gUGsfN0trTiJNK72Y0CL/VAyrmYEmeKI3pnHDawP64CEev31XLyAAOx2xmDo3tbadPxC0CSbw==
+  dependencies:
+    lodash "^4.17.21"
+
 "@types/color-name@^1.1.1":
   version "1.1.1"
   resolved "https://registry.yarnpkg.com/@types/color-name/-/color-name-1.1.1.tgz#1c1261bbeaa10a8055bbc5d8ab84b7b2afc846a0"
@@ -499,10 +506,12 @@ diff@5.0.0:
   resolved "https://registry.yarnpkg.com/diff/-/diff-5.0.0.tgz#7ed6ad76d859d030787ec35855f5b1daf31d852b"
   integrity sha512-/VTCrvm5Z0JGty/BWHljh+BAiw3IK+2j87NGMu8Nwc/f48WoDAC395uomO9ZD117ZOBaHmkX1oyLvkVM/aIT3w==
 
-docdash@^1.0.3:
-  version "1.2.0"
-  resolved "https://registry.yarnpkg.com/docdash/-/docdash-1.2.0.tgz#f99dde5b8a89aa4ed083a3150383e042d06c7f49"
-  integrity sha512-IYZbgYthPTspgqYeciRJNPhSwL51yer7HAwDXhF5p+H7mTDbPvY3PCk/QDjNxdPCpWkaJVFC4t7iCNB/t9E5Kw==
+docdash@^2.0.1:
+  version "2.0.1"
+  resolved "https://registry.yarnpkg.com/docdash/-/docdash-2.0.1.tgz#ac36dd1b64a2ae298e642c9a8d8d3c0f7f0a2c55"
+  integrity sha512-mkBhkeMyMwGV4YIdA7S4dIC25ENrfU/ZBfyTs/MXj/HUewW/dtx44xoho4PttCOMsqxlcghzfj8HRlam5QiSoQ==
+  dependencies:
+    "@jsdoc/salty" "^0.2.1"
 
 emoji-regex@^8.0.0:
   version "8.0.0"
